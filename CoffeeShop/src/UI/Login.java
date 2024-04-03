@@ -1,5 +1,9 @@
 package UI;
 
+import DAO.Customer_DAO;
+import Utils.Tools;
+import java.util.Arrays;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -16,6 +20,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        OnRun();
     }
 
     /**
@@ -38,6 +43,7 @@ public class Login extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -46,6 +52,11 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.lightGray));
 
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         lblSignUp.setText("Sign up");
         lblSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -139,6 +150,15 @@ public class Login extends javax.swing.JFrame {
         new Register().setVisible(true);
     }//GEN-LAST:event_lblSignUpMouseClicked
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        int role = Customer_DAO.Login(txtUsername.getText(), new String(txtPassword.getPassword()));
+    }//GEN-LAST:event_btnLoginActionPerformed
+    
+    private void OnRun()
+    {
+        
+    }
+    
     /**
      * @param args the command line arguments
      */

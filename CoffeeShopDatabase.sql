@@ -1,4 +1,4 @@
-create database CoffeeShop;
+﻿create database CoffeeShop;
 go
 
 use CoffeeShop;
@@ -18,10 +18,10 @@ go
 create table Customer
 (
 	userID int identity (1, 1),
-	username nvarchar(50),
-	position int,
+	username varchar(50) UNIQUE not null,
+	position int not null,
 	email varchar(254),
-	pass varchar(64),
+	pass varchar(64) not null,
 	gender bit,
 	phone varchar(12),
 	exactloc nvarchar(100),
@@ -115,3 +115,64 @@ alter table OrdItems
 	constraint OrdItems_productID
 		foreign key (productID) references Product(productID);
 go
+
+-- trigger
+
+create or alter trigger Customer_password_hash on Customer
+instead of insert
+as
+begin
+	insert into Customer(username, position, email, pass, gender, phone, exactloc, ward, district, city) values (
+	(select username from inserted), 
+	(select position from inserted), 
+	(select email from inserted), 
+	HASHBYTES('SHA2_256', (select pass from inserted)), 
+	(select gender from inserted), 
+	(select phone from inserted), 
+	(select exactloc from inserted), 
+	(select ward from inserted), 
+	(select district from inserted), 
+	(select city from inserted))
+end
+go
+
+-- Procs
+
+create or alter proc Register
+@Username varchar(50),
+@Email varchar(100),
+@Password varchar(32),
+@Success int output
+as
+begin
+	if not exists(select * from Customer where username like @Username or email like @Email)
+		begin
+		insert into Customer(username, email, pass, position) values (@Username, @Email, HASHBYTES('SHA2_256', @Password), 0)
+		set @Success = 1;
+		end
+	else
+		begin
+		set @Success = 0;
+		end
+end;
+go
+
+-- Funcs
+
+create or alter function UserLogin
+(
+@username varchar(50),
+@password varchar(32)
+)
+returns table
+as
+	return 
+	(select * from Customer
+	where username = @username
+	AND pass = HASHBYTES('SHA2_256', @password))
+go
+
+insert into Customer(username, pass, position) values ('NguyenQuocMinh' , '123456', 3);
+go
+
+select * from Customer

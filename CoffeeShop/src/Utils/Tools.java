@@ -51,6 +51,7 @@ public class Tools
         }
         catch (SQLException ex)
         {
+            ex.printStackTrace();
         }
         return null;
     }
