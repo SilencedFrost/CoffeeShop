@@ -147,7 +147,7 @@ as
 begin
 	if not exists(select * from Customer where username like @Username or email like @Email)
 		begin
-		insert into Customer(username, email, pass, position) values (@Username, @Email, HASHBYTES('SHA2_256', @Password), 0)
+		insert into Customer(username, email, pass, position) values (@Username, @Email, @Password, 0)
 		set @Success = 1;
 		end
 	else

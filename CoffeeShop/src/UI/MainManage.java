@@ -1,5 +1,7 @@
 package UI;
 
+import Utils.Tools;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -16,6 +18,7 @@ public class MainManage extends javax.swing.JFrame {
      */
     public MainManage() {
         initComponents();
+        OnRun();
     }
 
     /**
@@ -121,6 +124,10 @@ public class MainManage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void OnRun()
+    {
+        Tools.SetFrameToCenter(this);
+    }
     /**
      * @param args the command line arguments
      */
