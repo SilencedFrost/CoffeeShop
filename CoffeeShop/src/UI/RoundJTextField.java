@@ -38,7 +38,7 @@ public final class RoundJTextField extends JTextField{
     
     protected void RemovePlaceholder()
     {
-        if (this.getText().equals(this.placeholder)) {
+        if (super.getText().equals(this.placeholder)) {
             this.setText("");
             this.setForeground(Color.BLACK);
         }
@@ -46,10 +46,19 @@ public final class RoundJTextField extends JTextField{
     
     protected void AddPlaceholder()
     {
-        if (this.getText().isEmpty()) {
+        if (super.getText().isEmpty()) {
             this.setForeground(Color.GRAY);
             this.setText(this.placeholder);
         }
+    }
+    
+    @Override
+    public String getText()
+    {
+        RemovePlaceholder();
+        String txt = super.getText();
+        AddPlaceholder();
+        return txt;
     }
     
     @Override

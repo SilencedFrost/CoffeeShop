@@ -38,7 +38,7 @@ public final class RoundJPasswordField extends JPasswordField{
     
     protected void RemovePlaceholder()
     {
-        if (new String(this.getPassword()).equals(this.placeholder)) {
+        if (new String(super.getPassword()).equals(this.placeholder)) {
             this.setEchoChar('*');
             this.setText("");
             this.setForeground(Color.BLACK);
@@ -47,11 +47,20 @@ public final class RoundJPasswordField extends JPasswordField{
     
     protected void AddPlaceholder()
     {
-        if (new String(this.getPassword()).isEmpty()) {
+        if (new String(super.getPassword()).isEmpty()) {
             this.setEchoChar((char) 0);
             this.setForeground(Color.GRAY);
             this.setText(this.placeholder);
         }
+    }
+    
+    @Override
+    public char[] getPassword()
+    {
+        RemovePlaceholder();
+        char[] pass = super.getPassword();
+        AddPlaceholder();
+        return pass;
     }
     
     @Override
