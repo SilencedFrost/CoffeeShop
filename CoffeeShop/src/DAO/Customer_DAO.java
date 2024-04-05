@@ -20,7 +20,9 @@ public class Customer_DAO {
             stm.setString(1, username);
             stm.setString(2, pass);
             ResultSet rs = stm.executeQuery();
-            if(rs.next()) {return rs.getInt("position");
+            if(rs.next())
+            {
+                return rs.getInt("position");
             }
         }
         catch(Exception ex)

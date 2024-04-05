@@ -84,7 +84,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         lblSignUp.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         lblSignUp.setForeground(new java.awt.Color(102, 102, 102));
@@ -174,7 +174,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(lblWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -217,14 +217,30 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblSignUpMouseClicked
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        int role = Customer_DAO.Login(txtUsername.getText(), new String(txtPassword.getPassword()));
-        if(role == -1)
+        //.Reset lblWarning
+        lblWarning.setText("");
+        // Check if field empty
+        if(txtUsername.getText().equals("") || new String(txtPassword.getPassword()).equals(""))
         {
-            lblWarning.setText("Username or password is incorrect!");
+            lblWarning.setText("Can't leave info empty!");
         }
         else
         {
-            System.out.println("done");
+            int role = Customer_DAO.Login(txtUsername.getText(), new String(txtPassword.getPassword()));
+            System.out.println(role);
+            switch(role)
+            {
+                case -1 ->                 
+                {
+                    lblWarning.setText("Username or password is incorrect!");
+                }
+                case 1 ->                 
+                {
+                    new EmployeeMenu().setVisible(true);
+                    this.dispose();
+                }
+                default -> {}
+            }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
