@@ -4,8 +4,11 @@
  */
 package DAO;
 
+import Models.Customer;
 import java.sql.*;
 import Utils.Tools;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -53,5 +56,107 @@ public class Customer_DAO {
         ex.printStackTrace();
         }
         return false;
+    }
+    
+        public static ArrayList<Customer> loadAllCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
+
+        try (Connection con = Tools.GetCon();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM Customer")) {
+
+            while (rs.next()) {
+                int userID = rs.getInt("userID");
+                String username = rs.getString("username");
+                int position = rs.getInt("position");
+                String email = rs.getString("email");
+                boolean gender = rs.getBoolean("gender");
+                String phone = rs.getString("phone");
+                String exactloc = rs.getString("exactloc");
+                String ward = rs.getString("ward");
+                String district = rs.getString("district");
+                String city = rs.getString("city");
+
+                // Create a new Customer object excluding the password field
+                Customer customer = new Customer(userID, username, position, email, gender, phone, exactloc, ward, district, city);
+                customers.add(customer);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return customers;
+    }
+        
+    public static DefaultTableModel loadToTable(ArrayList<Customer> customers) {
+        // Define column names for the table
+        String[] columnNames = {"UserID", "Username", "Position", "Email", "Gender", "Phone", "Exact Location", "Ward", "District", "City"};
+
+        // Initialize data array for the table
+        Object[][] data = new Object[customers.size()][columnNames.length];
+
+        // Populate data array with customer information
+        for (int i = 0; i < customers.size(); i++) {
+            Customer customer = customers.get(i);
+            data[i][0] = customer.getUserID();
+            data[i][1] = customer.getUsername();
+            data[i][2] = customer.getPosition();
+            data[i][3] = customer.getEmail();
+            data[i][4] = customer.isGender() ? "Male" : "Female";
+            data[i][5] = customer.getPhone();
+            data[i][6] = customer.getExactloc();
+            data[i][7] = customer.getWard();
+            data[i][8] = customer.getDistrict();
+            data[i][9] = customer.getCity();
+        }
+
+        // Create DefaultTableModel with data and column names
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+
+        return model;
+    }
+    
+    public static ArrayList<Customer> filterCustomers(ArrayList<Customer> customers, String filterProperty, Object filterValue) {
+        ArrayList<Customer> filteredCustomers = new ArrayList<>();
+
+        // Iterate through each customer in the list
+        for (Customer customer : customers) {
+            // Check if the customer's property matches the filter value
+            switch (filterProperty) {
+                case "userID" -> {
+                    if (customer.getUserID() == (int) filterValue) {
+                        filteredCustomers.add(customer);
+                    }
+                }
+                case "username" -> {
+                    if (customer.getUsername().equals((String) filterValue)) {
+                        filteredCustomers.add(customer);
+                    }
+                }
+                case "position" -> {
+                    if (customer.getPosition() == (int) filterValue) {
+                        filteredCustomers.add(customer);
+                    }
+                }
+                case "username-userid" -> {
+                    String filterString = (String) filterValue;
+                    int userID;
+                    try {
+                        userID = Integer.parseInt(filterString);
+                        if (customer.getUserID() == userID || customer.getUsername().equals(filterString)) {
+                            filteredCustomers.add(customer);
+                        }
+                    } catch (NumberFormatException e) {
+                        // Not a valid integer, treat as username
+                        if (customer.getUsername().equals(filterString)) {
+                            filteredCustomers.add(customer);
+                        }
+                    }
+                }
+                default -> System.out.println("Invalid filter property");
+            }
+        }
+
+        return filteredCustomers;
     }
 }

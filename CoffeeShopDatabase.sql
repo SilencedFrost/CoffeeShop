@@ -172,7 +172,13 @@ as
 	AND pass = HASHBYTES('SHA2_256', @password))
 go
 
-insert into Customer(username, pass, position) values ('NguyenQuocMinh' , '123456', 3);
-go
-
 select * from Customer
+
+insert into Customer(username, pass, position) values ('Customer', '12345678', '0'); 
+go
+insert into Customer(username, pass, position) values ('Employee', '12345678', '1'); 
+go
+insert into Customer(username, pass, position) values ('Manager', '12345678', '2'); 
+go
+insert into Customer(username, pass, position) values ('Admin', '12345678', '3'); 
+go

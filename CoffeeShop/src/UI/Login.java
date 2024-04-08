@@ -234,9 +234,11 @@ public class Login extends javax.swing.JFrame {
                 {
                     lblWarning.setText("Username or password is incorrect!");
                 }
-                case 1 ->                 
+                case 2 ->                 
                 {
-                    new EmployeeMenu().setVisible(true);
+                    ManagerMenu MngMN = new ManagerMenu();
+                    MngMN.login(34);
+                    MngMN.setVisible(true);
                     this.dispose();
                 }
                 default -> {}

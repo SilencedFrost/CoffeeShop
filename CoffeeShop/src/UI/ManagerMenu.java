@@ -4,17 +4,20 @@
  */
 package UI;
 
+import Utils.Tools;
+
 /**
  *
  * @author thnrg
  */
 public class ManagerMenu extends javax.swing.JFrame {
-
+    protected int userid;
     /**
      * Creates new form ManagerMenu
      */
     public ManagerMenu() {
         initComponents();
+        OnRun();
     }
 
     /**
@@ -28,19 +31,39 @@ public class ManagerMenu extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jToolBar1 = new javax.swing.JToolBar();
+        btnLogOut = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
         Categories = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEmployees = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Manager Menu");
+        setResizable(false);
 
         jToolBar1.setRollover(true);
+
+        btnLogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Log out.png"))); // NOI18N
+        btnLogOut.setText("Log out");
+        btnLogOut.setFocusable(false);
+        btnLogOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLogOut.setMaximumSize(new java.awt.Dimension(68, 52));
+        btnLogOut.setMinimumSize(new java.awt.Dimension(68, 52));
+        btnLogOut.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogOutActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnLogOut);
+        jToolBar1.add(jSeparator1);
 
         Categories.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Lists.png"))); // NOI18N
         Categories.setText("Categories");
@@ -62,12 +85,17 @@ public class ManagerMenu extends javax.swing.JFrame {
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton1);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Unknown person.png"))); // NOI18N
-        jButton2.setText("Employees");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
+        btnEmployees.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Unknown person.png"))); // NOI18N
+        btnEmployees.setText("Employees");
+        btnEmployees.setFocusable(false);
+        btnEmployees.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEmployees.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEmployees.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmployeesActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnEmployees);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Users.png"))); // NOI18N
         jButton4.setText("Users");
@@ -78,6 +106,9 @@ public class ManagerMenu extends javax.swing.JFrame {
         jButton4.setPreferredSize(new java.awt.Dimension(68, 52));
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton4);
+
+        jMenu3.setText("Account");
+        jMenuBar1.add(jMenu3);
 
         jMenu2.setText("Manage");
         jMenuBar1.add(jMenu2);
@@ -103,6 +134,24 @@ public class ManagerMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLogOutActionPerformed
+
+    private void btnEmployeesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmployeesActionPerformed
+        new ManageEmployees(this, true).setVisible(true);
+    }//GEN-LAST:event_btnEmployeesActionPerformed
+
+    public  void login(int userid)
+    {
+        this.userid = userid;
+    }
+    
+    private void OnRun()
+    {
+        Tools.SetFrameToCenter(this);
+    }
     /**
      * @param args the command line arguments
      */
@@ -137,16 +186,20 @@ public class ManagerMenu extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Categories;
+    private javax.swing.JButton btnEmployees;
+    private javax.swing.JButton btnLogOut;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
