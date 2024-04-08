@@ -19,46 +19,76 @@ import javax.swing.JTextField;
 public final class RoundJTextField extends JTextField{
     private Shape shape;
     protected String placeholder;
+    
     public RoundJTextField(int size, String placeholder) {
         super(size);
         this.placeholder = placeholder;
-        AddPlaceholder();
+        addPlaceholder();
         setOpaque(false); // As suggested by @AVD in comment.
         this.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                RemovePlaceholder();
+                removePlaceholder();
             }
             @Override
             public void focusLost(FocusEvent e) {
-                AddPlaceholder();
+                addPlaceholder();
             }
         });
     }
     
-    protected void RemovePlaceholder()
+    public RoundJTextField(int size) {
+        super(size);
+        addPlaceholder();
+        setOpaque(false); // As suggested by @AVD in comment.
+        this.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                removePlaceholder();
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                addPlaceholder();
+            }
+        });
+    }
+    
+    protected void removePlaceholder()
     {
         if (super.getText().equals(this.placeholder)) {
-            this.setText("");
+            super.setText("");
             this.setForeground(Color.BLACK);
         }
     }
     
-    protected void AddPlaceholder()
+    protected void addPlaceholder()
     {
         if (super.getText().isEmpty()) {
             this.setForeground(Color.GRAY);
-            this.setText(this.placeholder);
+            super.setText(this.placeholder);
         }
     }
     
     @Override
     public String getText()
     {
-        RemovePlaceholder();
+        removePlaceholder();
         String txt = super.getText();
-        AddPlaceholder();
+        addPlaceholder();
         return txt;
+    }
+    
+    @Override
+    public void setText(String t)
+    {
+        if(t.equals(""))
+        {
+            addPlaceholder();
+        }
+        else
+        {
+            super.setText(t);
+        }
     }
     
     @Override

@@ -19,9 +19,26 @@ import javax.swing.JPasswordField;
 public final class RoundJPasswordField extends JPasswordField{
     private Shape shape;
     protected String placeholder;
+    
     public RoundJPasswordField(int size, String placeholder) {
         super(size);
         this.placeholder = placeholder;
+        AddPlaceholder();
+        setOpaque(false); // As suggested by @AVD in comment.
+        this.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                RemovePlaceholder();
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                AddPlaceholder();
+            }
+        });
+    }
+    
+    public RoundJPasswordField(int size) {
+        super(size);
         AddPlaceholder();
         setOpaque(false); // As suggested by @AVD in comment.
         this.addFocusListener(new FocusListener() {
@@ -40,7 +57,7 @@ public final class RoundJPasswordField extends JPasswordField{
     {
         if (new String(super.getPassword()).equals(this.placeholder)) {
             this.setEchoChar('*');
-            this.setText("");
+            super.setText("");
             this.setForeground(Color.BLACK);
         }
     }
@@ -50,7 +67,7 @@ public final class RoundJPasswordField extends JPasswordField{
         if (new String(super.getPassword()).isEmpty()) {
             this.setEchoChar((char) 0);
             this.setForeground(Color.GRAY);
-            this.setText(this.placeholder);
+            super.setText(this.placeholder);
         }
     }
     
