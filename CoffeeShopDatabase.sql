@@ -138,22 +138,33 @@ go
 
 -- Procs
 
-create or alter proc Register
+create or alter proc AddUser
 @Username varchar(50),
 @Email varchar(100),
 @Password varchar(32),
+@Position int,
+@Gender bit,
+@Phone varchar(12),
 @Success int output
 as
 begin
 	if not exists(select * from Customer where username like @Username or email like @Email)
 		begin
-		insert into Customer(username, email, pass, position) values (@Username, @Email, @Password, 0)
+		insert into Customer(username, email, pass, position, gender, phone) values (@Username, @Email, @Password, @Position, @Gender, @Phone)
 		set @Success = 1;
 		end
 	else
 		begin
 		set @Success = 0;
 		end
+end;
+go
+
+create or alter proc ResetPass
+@UserID int
+as
+begin
+	update Customer set pass = HASHBYTES('SHA2_256', 'DefaultPa$$') where userID = @UserID
 end;
 go
 
@@ -172,7 +183,7 @@ as
 	AND pass = HASHBYTES('SHA2_256', @password))
 go
 
-select * from Customer
+-- Inserts
 
 insert into Customer(username, pass, position) values ('Customer', '12345678', '0'); 
 go
@@ -182,3 +193,5 @@ insert into Customer(username, pass, position) values ('Manager', '12345678', '2
 go
 insert into Customer(username, pass, position) values ('Admin', '12345678', '3'); 
 go
+
+select * from Customer

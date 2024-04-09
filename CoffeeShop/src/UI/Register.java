@@ -1,6 +1,7 @@
 package UI;
 
 import DAO.Customer_DAO;
+import Utils.GetRegex;
 import Utils.Tools;
 
 /*
@@ -41,6 +42,7 @@ public class Register extends javax.swing.JFrame {
         txtPassword = new RoundJPasswordField(30, "Password");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Register");
         setResizable(false);
 
         lblTitle.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 36)); // NOI18N
@@ -81,26 +83,20 @@ public class Register extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtConfirmPassWord, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtConfirmPassWord, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,15 +133,22 @@ public class Register extends javax.swing.JFrame {
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // Clear lblWarning
         lblWarning.setText("");
-        // Check if any info empty
-        if (txtUsername.getText().equals("") || txtEmail.getText().equals("") || new String(txtPassword.getPassword()).equals("") || new String(txtConfirmPassWord.getPassword()).equals(""))
+        // Check username regex, only alphanumerical values and underscores, must be 1 to 50 char long
+        if(!txtUsername.getText().matches(GetRegex.getUsernameRegex()))
         {
-            lblWarning.setText("Can't leave info empty!");
+            lblWarning.setText("username must be 1-50 char long, no special char other than _");
+            txtUsername.requestFocus();
+        }
+        // Check email regex.
+        else if (!txtEmail.getText().matches(GetRegex.getEmailRegex()))
+        {
+            lblWarning.setText("Invalid email!");
+            txtEmail.requestFocus();
         }
         // Check password regex, must have atleast 1 special character, ranging from 8 to 32 char long
-        else if(!new String(txtPassword.getPassword()).matches("^(?=.*[!@#$%^&*()-_=+\\\\\\|\\[\\]{};:'\",<.>/?]).{8,32}$"))
+        else if(!new String(txtPassword.getPassword()).matches(GetRegex.getPasswordRegex()))
         {
-            lblWarning.setText("Invalid password!");
+            lblWarning.setText("password must have special char, uppercase char and be 8-32 char");
             txtPassword.requestFocus();
         }
         // Check if password and confirm password match
@@ -157,7 +160,7 @@ public class Register extends javax.swing.JFrame {
         else 
         {
             // Run register function, return boolean (if user exist = false (failed), if sucess = true
-            boolean check = Customer_DAO.Register(txtUsername.getText(), txtEmail.getText(), new String(txtPassword.getPassword()));
+            boolean check = Customer_DAO.AddUser(txtUsername.getText(), txtEmail.getText(), new String(txtPassword.getPassword()), 0);
             // If success, dispose and open login form
             if(check)
             {

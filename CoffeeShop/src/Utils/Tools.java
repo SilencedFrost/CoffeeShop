@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -67,5 +68,15 @@ public class Tools
         for (String item : data) {
             comboBox.addItem(item);
         }
+    }
+    
+    public static DefaultTableModel trimColumns(DefaultTableModel model, int desiredLength) {
+        int currentLength = model.getColumnCount();
+        if (currentLength > desiredLength) {
+            for (int i = currentLength - 1; i >= desiredLength; i--) {
+                model.setColumnCount(i);
+            }
+        }
+        return model;
     }
 }

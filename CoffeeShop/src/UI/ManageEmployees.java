@@ -6,10 +6,13 @@ package UI;
 
 import DAO.Customer_DAO;
 import Models.Customer;
+import Utils.GetRegex;
 import Utils.Tools;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,7 +30,7 @@ public class ManageEmployees extends javax.swing.JDialog {
     public ManageEmployees(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        OnRun();
+        onRun();
     }
 
     /**
@@ -39,28 +42,32 @@ public class ManageEmployees extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        grGender = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         txtSearch = new RoundJTextField(30, "Search UserID/Username...");
         btnSearch = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtUserID = new javax.swing.JTextField();
         txtUsername = new javax.swing.JTextField();
-        txtPosition = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtGender = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtPhone = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JTextField();
+        rdoMale = new javax.swing.JRadioButton();
+        rdoFemale = new javax.swing.JRadioButton();
+        btnResetPass = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmployees = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnNew = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("ManageEmployees");
@@ -81,7 +88,7 @@ public class ManageEmployees extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(txtSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -98,8 +105,6 @@ public class ManageEmployees extends javax.swing.JDialog {
 
         jLabel2.setText("Username");
 
-        jLabel3.setText("Position");
-
         jLabel4.setText("Email");
 
         jLabel5.setText("Gender");
@@ -110,32 +115,61 @@ public class ManageEmployees extends javax.swing.JDialog {
 
         jLabel6.setText("Phone");
 
+        jLabel7.setText("Password");
+
+        txtPassword.setEditable(false);
+
+        grGender.add(rdoMale);
+        rdoMale.setText("Male");
+
+        grGender.add(rdoFemale);
+        rdoFemale.setText("Female");
+
+        btnResetPass.setText("Reset");
+        btnResetPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetPassActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUserID)
-                    .addComponent(txtUsername)
-                    .addComponent(txtPosition)
-                    .addComponent(txtEmail)
-                    .addComponent(txtGender, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtPhone))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtUserID)
+                            .addComponent(txtUsername)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnResetPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(rdoMale, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rdoFemale, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtEmail)
+                            .addComponent(txtPhone))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -151,21 +185,23 @@ public class ManageEmployees extends javax.swing.JDialog {
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnResetPass))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel5)
+                    .addComponent(rdoMale)
+                    .addComponent(rdoFemale))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(38, 38, 38))
         );
 
         tblEmployees.setModel(new javax.swing.table.DefaultTableModel(
@@ -181,16 +217,44 @@ public class ManageEmployees extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblEmployees);
 
-        jButton2.setText("New");
+        btnNew.setText("New");
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Add");
-        jButton3.setEnabled(false);
+        btnAdd.setText("Add");
+        btnAdd.setEnabled(false);
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Delete");
         btnDelete.setEnabled(false);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("Update");
         btnUpdate.setEnabled(false);
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnCancel.setText("Cancel");
+        btnCancel.setEnabled(false);
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -201,9 +265,11 @@ public class ManageEmployees extends javax.swing.JDialog {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(btnNew)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btnAdd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDelete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -215,15 +281,16 @@ public class ManageEmployees extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
+                    .addComponent(btnNew)
+                    .addComponent(btnAdd)
                     .addComponent(btnDelete)
-                    .addComponent(btnUpdate))
+                    .addComponent(btnUpdate)
+                    .addComponent(btnCancel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -242,7 +309,105 @@ public class ManageEmployees extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void OnRun()
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        //Update button states
+        btnNew.setEnabled(false);
+        btnAdd.setEnabled(true);
+        btnDelete.setEnabled(false);
+        btnUpdate.setEnabled(false);
+        btnSearch.setEnabled(false);
+        btnResetPass.setEnabled(false);
+        btnCancel.setEnabled(true);
+        
+        //Clear tables
+        tblEmployees.setModel(new DefaultTableModel());
+        
+        //Clear text fields
+        clearTxtFields();
+        
+        grGender.setSelected(rdoMale.getModel(), true);
+
+        
+        //Change info of position field
+        txtPassword.setText("DefaultPa$$");
+        txtPassword.setEditable(false);
+        txtSearch.setEnabled(false);
+        txtUsername.setEditable(true);
+    }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if(!txtUsername.getText().matches(GetRegex.getUsernameRegex()))
+        {
+            JOptionPane.showMessageDialog(this, "Invalid username");
+            txtUsername.requestFocus();
+        }
+        else if (!txtEmail.getText().matches(GetRegex.getEmailRegex()))
+        {
+            JOptionPane.showMessageDialog(this, "Invalid email");
+            txtEmail.requestFocus();
+        }
+        else if (!txtPhone.getText().matches(GetRegex.getPhoneRegex()))
+        {
+            JOptionPane.showMessageDialog(this, "Invalid phone number");
+            txtPhone.requestFocus();
+        }
+        else
+        {
+            boolean state = Customer_DAO.AddUser(txtUsername.getText(), txtEmail.getText(), txtPassword.getText(), 1, rdoMale.isSelected(), txtPhone.getText());
+            if(!state)
+            {
+                JOptionPane.showMessageDialog(this, "User already exist");
+            }
+            else
+            {
+                btnNew.setEnabled(true);
+                btnAdd.setEnabled(false);
+                btnDelete.setEnabled(true);
+                btnUpdate.setEnabled(true);
+                btnSearch.setEnabled(true);
+                btnResetPass.setEnabled(true);
+                btnCancel.setEnabled(false);
+                clearTxtFields();
+                txtSearch.setEnabled(true);
+                txtUsername.setEditable(false);
+                loadTable();
+            }
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnResetPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPassActionPerformed
+        txtPassword.setEditable(true);
+        txtPassword.setText("DefaultPa$$");
+        txtPassword.setEditable(false);
+    }//GEN-LAST:event_btnResetPassActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        btnNew.setEnabled(true);
+        btnAdd.setEnabled(false);
+        btnDelete.setEnabled(true);
+        btnUpdate.setEnabled(true);
+        btnSearch.setEnabled(true);
+        btnResetPass.setEnabled(true);
+        btnCancel.setEnabled(false);
+        clearTxtFields();
+        txtSearch.setEnabled(true);
+        txtUsername.setEditable(false);
+        loadTable();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        Customer_DAO.deleteUser(Integer.parseInt(txtUserID.getText()));
+        loadTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if(!txtPassword.getText().equals(""))
+        {
+            Customer_DAO.resetPass(Integer.parseInt(txtUserID.getText()));
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void onRun()
     {
         Tools.SetFrameToCenter(this);
         btnSearch.requestFocus();
@@ -276,9 +441,15 @@ public class ManageEmployees extends javax.swing.JDialog {
             Customer user = Customer_DAO.filterCustomers(Customer_DAO.loadAllCustomers(), "username", tblEmployees.getValueAt(tblEmployees.getSelectedRow(), 1)).get(0);
             txtUserID.setText(String.valueOf(user.getUserID()));
             txtUsername.setText(user.getUsername());
-            txtPosition.setText(String.valueOf(user.getPosition()));
             txtEmail.setText(user.getEmail());
-            txtGender.setText(user.isGender()?"male":"female");
+            if(user.isGender())
+            {
+                rdoMale.setSelected(true);
+            }
+            else
+            {
+                rdoFemale.setSelected(true);
+            }
             txtPhone.setText(user.getPhone());
         }
     }
@@ -287,20 +458,20 @@ public class ManageEmployees extends javax.swing.JDialog {
     {
         txtUserID.setText("");
         txtUsername.setText("");
-        txtPosition.setText("");
+        txtPassword.setText("");
         txtEmail.setText("");
-        txtGender.setText("");
+        grGender.clearSelection();
         txtPhone.setText("");
     }
     
     private void loadTable()
     {
-        tblEmployees.setModel(Customer_DAO.loadToTable(Customer_DAO.filterCustomers(Customer_DAO.loadAllCustomers(), "position", 1)));
+        tblEmployees.setModel(Tools.trimColumns(Customer_DAO.loadToTable(Customer_DAO.filterCustomers(Customer_DAO.loadAllCustomers(), "position", 1)), 6));
     }
     
     private void loadTable(ArrayList<Customer> arr)
     {
-        tblEmployees.setModel(Customer_DAO.loadToTable(arr));
+        tblEmployees.setModel(Tools.trimColumns(Customer_DAO.loadToTable(arr), 6));
     }
        
     /**
@@ -346,25 +517,29 @@ public class ManageEmployees extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnNew;
+    private javax.swing.JButton btnResetPass;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.ButtonGroup grGender;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rdoFemale;
+    private javax.swing.JRadioButton rdoMale;
     private javax.swing.JTable tblEmployees;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtGender;
+    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtPhone;
-    private javax.swing.JTextField txtPosition;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtUserID;
     private javax.swing.JTextField txtUsername;

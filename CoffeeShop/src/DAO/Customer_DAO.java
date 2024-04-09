@@ -35,19 +35,72 @@ public class Customer_DAO {
         return -1;
     }
     
-    public static boolean Register(String username, String email, String password)
+    public static void deleteUser(int userid)
+    {
+        try (Connection con = Tools.GetCon())
+        {
+            PreparedStatement stm = con.prepareStatement("delete Customer where userid = ?");
+            stm.setInt(1, userid);
+            stm.execute();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void resetPass(int userid)
+    {
+        try (Connection con = Tools.GetCon())
+        {
+            Statement stm = con.createStatement();
+            stm.execute("EXEC ResetPass " + userid);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static boolean AddUser(String username, String email, String password, int position)
     {
         try (Connection con = Tools.GetCon()) {
-        CallableStatement cstmt = con.prepareCall("{CALL Register(?, ?, ?, ?)}");
+        CallableStatement cstmt = con.prepareCall("{CALL AddUser(?, ?, ?, ?, null, null, ?)}");
 
         cstmt.setString(1, username);
         cstmt.setString(2, email);
         cstmt.setString(3, password);
-        cstmt.registerOutParameter(4, Types.INTEGER); // Output parameter for success/fail
+        cstmt.setInt(4, position);
+        cstmt.registerOutParameter(5, Types.INTEGER); // Output parameter for success/fail
 
         cstmt.execute();
 
-        int success = cstmt.getInt(4); // Retrieve the output parameter
+        int success = cstmt.getInt(5); // Retrieve the output parameter
+
+        return success == 1;
+        } 
+        catch (Exception ex) 
+        {
+        ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public static boolean AddUser(String username, String email, String password, int position, boolean gender, String phone)
+    {
+        try (Connection con = Tools.GetCon()) {
+        CallableStatement cstmt = con.prepareCall("{CALL AddUser(?, ?, ?, ?, ?, ?, ?)}");
+
+        cstmt.setString(1, username);
+        cstmt.setString(2, email);
+        cstmt.setString(3, password);
+        cstmt.setInt(4, position);
+        cstmt.setBoolean(5, gender);
+        cstmt.setString(6, phone);
+        cstmt.registerOutParameter(7, Types.INTEGER); // Output parameter for success/fail
+
+        cstmt.execute();
+
+        int success = cstmt.getInt(7); // Retrieve the output parameter
 
         return success == 1;
         } 
@@ -116,7 +169,8 @@ public class Customer_DAO {
         return model;
     }
     
-    public static ArrayList<Customer> filterCustomers(ArrayList<Customer> customers, String filterProperty, Object filterValue) {
+    public static ArrayList<Customer> filterCustomers(ArrayList<Customer> customers, String filterProperty, Object filterValue) 
+    {
         ArrayList<Customer> filteredCustomers = new ArrayList<>();
 
         // Iterate through each customer in the list
@@ -129,7 +183,7 @@ public class Customer_DAO {
                     }
                 }
                 case "username" -> {
-                    if (customer.getUsername().equals((String) filterValue)) {
+                    if (customer.getUsername().contains((String) filterValue)) {
                         filteredCustomers.add(customer);
                     }
                 }
@@ -143,12 +197,12 @@ public class Customer_DAO {
                     int userID;
                     try {
                         userID = Integer.parseInt(filterString);
-                        if (customer.getUserID() == userID || customer.getUsername().equals(filterString)) {
+                        if (customer.getUserID() == userID || customer.getUsername().contains(filterString)) {
                             filteredCustomers.add(customer);
                         }
                     } catch (NumberFormatException e) {
                         // Not a valid integer, treat as username
-                        if (customer.getUsername().equals(filterString)) {
+                        if (customer.getUsername().contains(filterString)) {
                             filteredCustomers.add(customer);
                         }
                     }
