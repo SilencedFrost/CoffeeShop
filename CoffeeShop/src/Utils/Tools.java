@@ -4,6 +4,7 @@
  */
 package Utils;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -14,6 +15,8 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -78,5 +81,17 @@ public class Tools
             }
         }
         return model;
+    }
+    
+    public static void setLAF()
+    {
+        try 
+        {
+            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+        } 
+        catch (UnsupportedLookAndFeelException ex) 
+        {
+            
+        }
     }
 }
