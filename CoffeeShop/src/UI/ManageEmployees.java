@@ -336,22 +336,7 @@ public class ManageEmployees extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        if(!txtUsername.getText().matches(GetRegex.getUsernameRegex()))
-        {
-            JOptionPane.showMessageDialog(this, "Invalid username");
-            txtUsername.requestFocus();
-        }
-        else if (!txtEmail.getText().matches(GetRegex.getEmailRegex()))
-        {
-            JOptionPane.showMessageDialog(this, "Invalid email");
-            txtEmail.requestFocus();
-        }
-        else if (!txtPhone.getText().matches(GetRegex.getPhoneRegex()))
-        {
-            JOptionPane.showMessageDialog(this, "Invalid phone number");
-            txtPhone.requestFocus();
-        }
-        else
+        if(checkFields())
         {
             boolean state = Customer_DAO.AddUser(txtUsername.getText(), txtEmail.getText(), txtPassword.getText(), 1, rdoMale.isSelected(), txtPhone.getText());
             if(!state)
@@ -381,6 +366,30 @@ public class ManageEmployees extends javax.swing.JDialog {
         txtPassword.setEditable(false);
     }//GEN-LAST:event_btnResetPassActionPerformed
 
+    private boolean checkFields()
+    {
+        if(!txtUsername.getText().matches(GetRegex.getUsernameRegex()))
+        {
+            JOptionPane.showMessageDialog(this, "Invalid username");
+            txtUsername.requestFocus();
+        }
+        else if (!txtEmail.getText().matches(GetRegex.getEmailRegex()))
+        {
+            JOptionPane.showMessageDialog(this, "Invalid email");
+            txtEmail.requestFocus();
+        }
+        else if (!txtPhone.getText().matches(GetRegex.getPhoneRegex()))
+        {
+            JOptionPane.showMessageDialog(this, "Invalid phone number");
+            txtPhone.requestFocus();
+        }
+        else
+        {
+            return true;
+        }
+        return false;
+    }
+    
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         btnNew.setEnabled(true);
         btnAdd.setEnabled(false);
@@ -404,6 +413,11 @@ public class ManageEmployees extends javax.swing.JDialog {
         if(!txtPassword.getText().equals(""))
         {
             Customer_DAO.resetPass(Integer.parseInt(txtUserID.getText()));
+        }
+        if(checkFields())
+        {
+            Customer_DAO.updateUser(Integer.parseInt(txtUserID.getText()), txtEmail.getText(), rdoMale.isSelected(), txtPhone.getText());
+            loadTable();
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 

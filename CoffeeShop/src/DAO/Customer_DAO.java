@@ -111,6 +111,24 @@ public class Customer_DAO {
         return false;
     }
     
+    public static void updateUser(int userID, String email, boolean gender, String phone)
+    {
+        try(Connection con = Tools.GetCon())
+        {
+            PreparedStatement stm = con.prepareStatement("Update customer set email = ?, gender = ?, phone = ? where userid = ?");
+            stm.setString(1, email);
+            stm.setBoolean(2, gender);
+            stm.setString(3, phone);
+            stm.setInt(4, userID);
+            
+            stm.execute();
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    
         public static ArrayList<Customer> loadAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
 

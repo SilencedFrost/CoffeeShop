@@ -185,13 +185,13 @@ go
 
 -- Inserts
 
-insert into Customer(username, pass, position) values ('Customer', '12345678', '0'); 
+insert into Customer(username, pass, position) values ('Customer', 'DefaultPa$$', '0'); 
 go
-insert into Customer(username, pass, position) values ('Employee', '12345678', '1'); 
+insert into Customer(username, pass, position) values ('Employee', 'DefaultPa$$', '1'); 
 go
-insert into Customer(username, pass, position) values ('Manager', '12345678', '2'); 
+insert into Customer(username, pass, position) values ('Manager', 'DefaultPa$$', '2'); 
 go
-insert into Customer(username, pass, position) values ('Admin', '12345678', '3'); 
+insert into Customer(username, pass, position) values ('Admin', 'DefaultPa$$', '3'); 
 go
 
 select * from Customer
