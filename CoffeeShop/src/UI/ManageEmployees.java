@@ -424,7 +424,7 @@ public class ManageEmployees extends javax.swing.JDialog {
         btnSearch.requestFocus();
         loadTable();
         LoadItems();
-         tblEmployees.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+        tblEmployees.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
              updateButtonState();
              LoadItems();
         });

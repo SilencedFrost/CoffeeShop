@@ -210,7 +210,13 @@ public class Customer_DAO {
         }
 
         // Create DefaultTableModel with data and column names
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        DefaultTableModel model = new DefaultTableModel(data, columnNames)
+        {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make all cells non-editable
+            }
+        };
 
         return model;
     }
@@ -229,7 +235,7 @@ public class Customer_DAO {
                     }
                 }
                 case "username" -> {
-                    if (customer.getUsername().contains((String) filterValue)) {
+                    if (customer.getUsername().toLowerCase().contains(((String) filterValue).toLowerCase())) {
                         filteredCustomers.add(customer);
                     }
                 }
@@ -239,16 +245,16 @@ public class Customer_DAO {
                     }
                 }
                 case "username-userid" -> {
-                    String filterString = (String) filterValue;
+                    String filterString = ((String) filterValue).toLowerCase();
                     int userID;
                     try {
                         userID = Integer.parseInt(filterString);
-                        if (customer.getUserID() == userID || customer.getUsername().contains(filterString)) {
+                        if (customer.getUserID() == userID || customer.getUsername().toLowerCase().contains(filterString)) {
                             filteredCustomers.add(customer);
                         }
                     } catch (NumberFormatException e) {
                         // Not a valid integer, treat as username
-                        if (customer.getUsername().contains(filterString)) {
+                        if (customer.getUsername().toLowerCase().contains(filterString)) {
                             filteredCustomers.add(customer);
                         }
                     }

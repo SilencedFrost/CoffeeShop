@@ -4,10 +4,6 @@
  */
 package Utils;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
-
 /**
  *
  * @author thnrg
@@ -15,26 +11,31 @@ import java.util.Properties;
 public class GetRegex {
     public static String getUsernameRegex()
     {
-        return Tools.getProps().getProperty("username");
+        return Tools.getProps("regex").getProperty("username");
     }
     
     public static String getPasswordRegex()
     {
-        return Tools.getProps().getProperty("password");
+        return Tools.getProps("regex").getProperty("password");
     }
     
     public static String getEmailRegex()
     {
-        return Tools.getProps().getProperty("email");
+        return Tools.getProps("regex").getProperty("email");
     }
     
     public static String getPhoneRegex()
     {
-        return Tools.getProps().getProperty("phone");
+        return Tools.getProps("regex").getProperty("phone");
     }
     
     public static String getProductIDRegex()
     {
-        return Tools.getProps().getProperty("productid");
+        return Tools.getProps("regex").getProperty("productid");
+    }
+    
+    public static String getPositiveFloatRegex()
+    {
+        return Tools.getProps("regex").getProperty("positivefloat");
     }
 }

@@ -286,6 +286,36 @@ begin
 end;
 go
 
+create or alter proc AddProduct
+@ProductID char(11),
+@PdName nvarchar(20),
+@PdDesc nvarchar(500),
+@Visibility bit,
+@Price float,
+@Picture varchar(50),
+@Success int output
+as
+begin
+	if not exists(select * from Product where productID like @ProductID)
+		begin
+		insert into Product(productID, pdname, pddesc, visibility, price, picture) values (@ProductID, @PdName, @PdDesc, @Visibility, @Price, @picture)
+		set @Success = 1;
+		end
+	else
+		begin
+		set @Success = 0;
+		end
+end;
+go
+
+create or alter proc ResetPass
+@UserID int
+as
+begin
+	update Customer set pass = HASHBYTES('SHA2_256', 'DefaultPa$$') where userID = @UserID
+end;
+go
+
 -- Funcs
 
 create or alter function UserLogin

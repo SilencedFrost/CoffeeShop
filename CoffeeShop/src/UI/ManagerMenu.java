@@ -37,10 +37,15 @@ public class ManagerMenu extends javax.swing.JFrame {
         btnProducts = new javax.swing.JButton();
         btnEmployees = new javax.swing.JButton();
         btnUsers = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        btnMenuCategories = new javax.swing.JMenuItem();
         btnMenuProducts = new javax.swing.JMenuItem();
         menuBtnEmployees = new javax.swing.JMenuItem();
         menuBtnUsers = new javax.swing.JMenuItem();
@@ -92,6 +97,11 @@ public class ManagerMenu extends javax.swing.JFrame {
         btnProducts.setMinimumSize(new java.awt.Dimension(68, 52));
         btnProducts.setPreferredSize(new java.awt.Dimension(68, 52));
         btnProducts.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnProducts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductsActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnProducts);
 
         btnEmployees.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Unknown person.png"))); // NOI18N
@@ -121,22 +131,68 @@ public class ManagerMenu extends javax.swing.JFrame {
         });
         jToolBar1.add(btnUsers);
 
+        jLabel1.setText("Orders");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 573, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 326, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Unfinished", jPanel1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 573, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 326, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Finished", jPanel2);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 573, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 326, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("All", jPanel3);
+
         jMenu3.setText("Account");
         jMenuBar1.add(jMenu3);
 
         jMenu2.setText("Manage");
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem2.setText("Categories");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        btnMenuCategories.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        btnMenuCategories.setText("Categories");
+        btnMenuCategories.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                btnMenuCategoriesActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        jMenu2.add(btnMenuCategories);
 
         btnMenuProducts.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         btnMenuProducts.setText("Products");
+        btnMenuProducts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuProductsActionPerformed(evt);
+            }
+        });
         jMenu2.add(btnMenuProducts);
 
         menuBtnEmployees.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -168,16 +224,27 @@ public class ManagerMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 237, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
@@ -193,9 +260,9 @@ public class ManagerMenu extends javax.swing.JFrame {
         new ManageUsers(this, true).setVisible(true);
     }//GEN-LAST:event_btnUsersActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void btnMenuCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuCategoriesActionPerformed
+        new ManageCategories(this, true).setVisible(true);
+    }//GEN-LAST:event_btnMenuCategoriesActionPerformed
 
     private void menuBtnEmployeesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnEmployeesActionPerformed
         new ManageEmployees(this, true).setVisible(true);
@@ -209,6 +276,14 @@ public class ManagerMenu extends javax.swing.JFrame {
         new ManageCategories(this, true).setVisible(true);
     }//GEN-LAST:event_CategoriesActionPerformed
 
+    private void btnProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductsActionPerformed
+        new ManageProducts(this, true).setVisible(true);
+    }//GEN-LAST:event_btnProductsActionPerformed
+
+    private void btnMenuProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuProductsActionPerformed
+        new ManageProducts(this, true).setVisible(true);
+    }//GEN-LAST:event_btnMenuProductsActionPerformed
+
     public  void login(int userid)
     {
         this.userid = userid;
@@ -216,7 +291,6 @@ public class ManagerMenu extends javax.swing.JFrame {
     
     private void OnRun()
     {
-        Tools.SetFrameToCenter(this);
     }
     /**
      * @param args the command line arguments
@@ -243,16 +317,21 @@ public class ManagerMenu extends javax.swing.JFrame {
     private javax.swing.JButton Categories;
     private javax.swing.JButton btnEmployees;
     private javax.swing.JButton btnLogOut;
+    private javax.swing.JMenuItem btnMenuCategories;
     private javax.swing.JMenuItem btnMenuProducts;
     private javax.swing.JButton btnProducts;
     private javax.swing.JButton btnUsers;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem menuBtnEmployees;
     private javax.swing.JMenuItem menuBtnUsers;

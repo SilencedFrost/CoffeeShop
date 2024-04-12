@@ -34,7 +34,12 @@ public class Product_DAO {
         }
 
         // Create DefaultTableModel with data and column names
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        DefaultTableModel model = new DefaultTableModel(data, columnNames){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make all cells non-editable
+            }
+        };
 
         return model;
     }
@@ -42,22 +47,26 @@ public class Product_DAO {
     public static ArrayList<Product> filterProducts(ArrayList<Product> products, String filterProperty, Object filterValue) {
         ArrayList<Product> filteredProducts = new ArrayList<>();
 
-        // Iterate through each product in the list
         for (Product product : products) {
-            // Check if the product's property matches the filter value
             switch (filterProperty) {
-                case "productID" -> {
-                    if (product.getProductID().equals(filterValue)) {
+                case "productID" -> 
+                {
+                    if (product.getProductID().toLowerCase().contains(((String) filterValue).toLowerCase())) {
                         filteredProducts.add(product);
                     }
                 }
-                case "pdname" -> {
-                    if (product.getPdname().contains((String) filterValue)) {
+                case "pdname" -> 
+                {
+                    if (product.getPdname().toLowerCase().contains(((String) filterValue).toLowerCase())) {
                         filteredProducts.add(product);
                     }
-                    // Add more cases for other properties if needed
                 }
-                // Add more cases for other properties if needed
+                case "pdname-productID" ->
+                {
+                    if (product.getPdname().toLowerCase().contains(((String) filterValue).toLowerCase()) || product.getProductID().toLowerCase().contains(((String) filterValue).toLowerCase())) {
+                        filteredProducts.add(product);
+                    }
+                }
             }
         }
 
@@ -93,5 +102,45 @@ public class Product_DAO {
         }
 
         return products;
+    }
+    
+    public static void deleteProduct(String productID)
+    {
+        try(Connection con = Tools.GetCon())
+        {
+            PreparedStatement stm = con.prepareStatement("delete product where productid like ?");
+            stm.setString(1, productID);
+            stm.execute();
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static boolean AddProduct(String productID, String pdName, String pdDesc, boolean visibility, float price, String picture)
+    {
+        try (Connection con = Tools.GetCon()) {
+        CallableStatement cstmt = con.prepareCall("{CALL AddProduct(?, ?, ?, ?, ?, ?, ?)}");
+
+        cstmt.setString(1, productID);
+        cstmt.setNString(2, pdName);
+        cstmt.setNString(3, pdDesc);
+        cstmt.setBoolean(4, visibility);
+        cstmt.setFloat(5, price);
+        cstmt.setString(6, picture);
+        cstmt.registerOutParameter(7, Types.INTEGER); // Output parameter for success/fail
+
+        cstmt.execute();
+
+        int success = cstmt.getInt(7); // Retrieve the output parameter
+
+        return success == 1;
+        } 
+        catch (Exception ex) 
+        {
+        ex.printStackTrace();
+        }
+        return false;
     }
 }

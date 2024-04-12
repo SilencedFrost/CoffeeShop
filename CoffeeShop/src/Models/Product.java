@@ -91,4 +91,9 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
+    
+    public String getVariant()
+    {
+        return this.productID.substring(6, 9);
+    }
 }

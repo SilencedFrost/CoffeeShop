@@ -12,16 +12,16 @@ public class GetConProps {
     
     public static String getDBName()
     {
-        return Tools.getProps().getProperty("dbname");
+        return Tools.getProps("connection").getProperty("dbname");
     }
     
     public static String getUsername()
     {
-        return Tools.getProps().getProperty("username");
+        return Tools.getProps("connection").getProperty("username");
     }
     
     public static String getPassword()
     {
-        return Tools.getProps().getProperty("pass");
+        return Tools.getProps("connection").getProperty("pass");
     }
 }

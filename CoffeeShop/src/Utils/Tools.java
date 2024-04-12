@@ -28,11 +28,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Tools 
 {
-    public static Properties getProps()
+    public static Properties getProps(String filename)
     {
         try
         {
-            FileReader reader = new FileReader("src/Utils/connection.properties");
+            FileReader reader = new FileReader("src/Utils/" + filename + ".properties");
             Properties prop = new Properties();
             prop.load(reader);
             return prop;
