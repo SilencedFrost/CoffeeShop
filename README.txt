@@ -33,5 +33,3 @@ Nguyen Quoc Minh
 
 [UX/UI]
 Link: https://www.figma.com/file/F97h5jLJuztHj20dBY4V1I/Nh%C3%B3m-2?type=design&node-id=377-2&mode=design
-
-test
