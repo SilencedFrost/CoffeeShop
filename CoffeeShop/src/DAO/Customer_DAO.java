@@ -159,7 +159,8 @@ public class Customer_DAO {
 
         try (Connection con = Tools.GetCon();
              Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM Customer")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM Customer")) 
+        {
 
             while (rs.next()) {
                 int userID = rs.getInt("userID");

@@ -16,17 +16,25 @@ public class Product {
     protected String pddesc;
     protected boolean visibility;
     protected Date adddate;
-    protected String size;
     protected float price;
+    protected String picture;
 
-    public Product(String productID, String pdname, String pddesc, boolean visibility, Date adddate, String size, float price) {
+    public Product(String productID, String pdname, String pddesc, boolean visibility, Date adddate, float price, String picture) {
         this.productID = productID;
         this.pdname = pdname;
         this.pddesc = pddesc;
         this.visibility = visibility;
         this.adddate = adddate;
-        this.size = size;
         this.price = price;
+        this.picture = picture;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public Product() {
@@ -73,11 +81,7 @@ public class Product {
     }
 
     public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
+        return productID.substring(productID.length() - 1);
     }
 
     public float getPrice() {
@@ -87,6 +91,4 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
-    
-    
 }

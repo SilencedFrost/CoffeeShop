@@ -34,14 +34,14 @@ public class ManagerMenu extends javax.swing.JFrame {
         btnLogOut = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         Categories = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnProducts = new javax.swing.JButton();
         btnEmployees = new javax.swing.JButton();
         btnUsers = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        btnMenuProducts = new javax.swing.JMenuItem();
         menuBtnEmployees = new javax.swing.JMenuItem();
         menuBtnUsers = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
@@ -84,15 +84,15 @@ public class ManagerMenu extends javax.swing.JFrame {
         });
         jToolBar1.add(Categories);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Label.png"))); // NOI18N
-        jButton1.setText("Drinks");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setMaximumSize(new java.awt.Dimension(68, 52));
-        jButton1.setMinimumSize(new java.awt.Dimension(68, 52));
-        jButton1.setPreferredSize(new java.awt.Dimension(68, 52));
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        btnProducts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Label.png"))); // NOI18N
+        btnProducts.setText("Products");
+        btnProducts.setFocusable(false);
+        btnProducts.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnProducts.setMaximumSize(new java.awt.Dimension(68, 52));
+        btnProducts.setMinimumSize(new java.awt.Dimension(68, 52));
+        btnProducts.setPreferredSize(new java.awt.Dimension(68, 52));
+        btnProducts.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnProducts);
 
         btnEmployees.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Unknown person.png"))); // NOI18N
         btnEmployees.setText("Employees");
@@ -135,9 +135,9 @@ public class ManagerMenu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem2);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem3.setText("Drinks");
-        jMenu2.add(jMenuItem3);
+        btnMenuProducts.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        btnMenuProducts.setText("Products");
+        jMenu2.add(btnMenuProducts);
 
         menuBtnEmployees.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuBtnEmployees.setText("Employees");
@@ -243,15 +243,15 @@ public class ManagerMenu extends javax.swing.JFrame {
     private javax.swing.JButton Categories;
     private javax.swing.JButton btnEmployees;
     private javax.swing.JButton btnLogOut;
+    private javax.swing.JMenuItem btnMenuProducts;
+    private javax.swing.JButton btnProducts;
     private javax.swing.JButton btnUsers;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem menuBtnEmployees;

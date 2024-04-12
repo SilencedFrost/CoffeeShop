@@ -8,8 +8,11 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -25,6 +28,22 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Tools 
 {
+    public static Properties getProps()
+    {
+        try
+        {
+            FileReader reader = new FileReader("src/Utils/connection.properties");
+            Properties prop = new Properties();
+            prop.load(reader);
+            return prop;
+        }
+        catch(IOException ex)
+        {
+            
+        }
+        return null;
+    }
+    
     public static void SetIcon(JLabel container, String imgpath)
     {
         ImageIcon icon = new ImageIcon(imgpath);
@@ -62,7 +81,7 @@ public class Tools
     
     public static String getConInfo()
     {
-        return "jdbc:sqlserver://localhost:1433;databaseName=" + ReadProps.getDBName() + ";username=" + ReadProps.getUsername() + ";password=" + ReadProps.getPassword();
+        return "jdbc:sqlserver://localhost:1433;databaseName=" + GetConProps.getDBName() + ";username=" + GetConProps.getUsername() + ";password=" + GetConProps.getPassword();
     }
     
     public static void loadComboBox(JComboBox comboBox, ArrayList<String> data) {

@@ -37,7 +37,7 @@ create table Comment
 (
 	commentID int identity(1, 1),
 	userID int,
-	productID char(10),
+	productID char(11),
 	adddate datetime,
 	rating float,
 	comm nvarchar(500),
@@ -48,7 +48,7 @@ go
 create table Cart
 (
 	userID int,
-	productID char(10),
+	productID char(11),
 	quantity int,
 	primary key (userID, productID)
 );
@@ -68,20 +68,21 @@ go
 create table OrdItems
 (
 	orderID int,
-	productID char(10),
+	productID char(11),
 	primary key (orderID, productID)
 );
 go
 
+-- Product ID: XXXXX (product name identifier) - 123 (ProductID) - X (Size (S/M/L))
 create table Product
 (
-	productID char(10),
+	productID char(11),
 	pdname nvarchar(20),
 	pddesc nvarchar(500),
 	visibility bit,
-	adddate datetime,
-	size char(1),
+	adddate date,
 	price float,
+	picture varchar(50),
 	primary key (productID)
 );
 go
@@ -242,6 +243,17 @@ begin
 end;
 go
 
+create or alter trigger Product_add_date on Product
+after insert
+as
+begin
+    update Product
+    set adddate = getdate()
+    from inserted
+    where Product.productID = inserted.productID;
+end;
+go
+
 -- Procs
 
 create or alter proc AddUser
@@ -298,6 +310,28 @@ go
 insert into Customer(username, pass, position) values ('Manager', 'DefaultPa$$', '2'); 
 go
 insert into Customer(username, pass, position) values ('Admin', 'DefaultPa$$', '3'); 
+go
+
+insert into Product(productID, pdname, pddesc, visibility, price) values 
+('ESPSO-001-S', N'Espresso', N'Small espresso', 1, 30000),
+('ESPSO-002-M', N'Espresso', N'Medium espresso', 1, 40000),
+('ESPSO-003-L', N'Espresso', N'Large espresso', 1, 45000),
+('LATTE-001-S', N'Latte', N'Small latte', 1, 35000),
+('LATTE-002-M', N'Latte', N'Medium latte', 1, 45000),
+('LATTE-003-L', N'Latte', N'Large latte', 1, 50000),
+('CAPPU-001-S', N'Cappuccino', N'Small cappuccino', 1, 30000),
+('CAPPU-002-M', N'Cappuccino', N'Medium cappuccino', 1, 40000),
+('CAPPU-003-L', N'Cappuccino', N'Large cappuccino', 1, 45000),
+('MOCHA-001-S', N'Mocha', N'Small mocha', 1, 40000),
+('MOCHA-002-M', N'Mocha', N'Medium mocha', 1, 50000),
+('MOCHA-003-L', N'Mocha', N'Large mocha', 1, 55000),
+('CBREW-001-S', N'Cold brew', N'Small cold brew', 1, 35000),
+('CBREW-002-M', N'Cold brew', N'Medium cold brew', 1, 45000),
+('CBREW-003-L', N'Cold brew', N'Large cold brew', 1, 55000),
+('STRSM-001-M', N'Strawberry smoothie', N'Strawberry smoothie', 1, 45000),
+('MGOSM-001-M', N'Mango smoothie', N'Mango smoothie', 1, 45000),
+('MATSM-001-M', N'Matcha smoothie', N'Matcha smoothie', 1, 45000),
+('AVOSM-001-M', N'Avocado smoothie', N'Avocado smoothie', 1, 45000)
 go
 
 /* === Vietnamese Provinces Database Dataset for Microsoft SQL Server === */

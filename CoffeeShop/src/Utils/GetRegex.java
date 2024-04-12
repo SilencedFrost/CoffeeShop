@@ -15,37 +15,26 @@ import java.util.Properties;
 public class GetRegex {
     public static String getUsernameRegex()
     {
-        return getProps().getProperty("username");
+        return Tools.getProps().getProperty("username");
     }
     
     public static String getPasswordRegex()
     {
-        return getProps().getProperty("password");
+        return Tools.getProps().getProperty("password");
     }
     
     public static String getEmailRegex()
     {
-        return getProps().getProperty("email");
+        return Tools.getProps().getProperty("email");
     }
     
     public static String getPhoneRegex()
     {
-        return getProps().getProperty("phone");
+        return Tools.getProps().getProperty("phone");
     }
     
-    public static Properties getProps()
+    public static String getProductIDRegex()
     {
-        try
-        {
-            FileReader reader = new FileReader("src/Utils/regex.properties");
-            Properties prop = new Properties();
-            prop.load(reader);
-            return prop;
-        }
-        catch(IOException ex)
-        {
-            
-        }
-        return null;
+        return Tools.getProps().getProperty("productid");
     }
 }
