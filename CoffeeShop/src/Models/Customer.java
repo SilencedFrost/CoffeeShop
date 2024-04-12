@@ -4,6 +4,8 @@
  */
 package Models;
 
+import java.util.Date;
+
 /**
  *
  * @author thnrg
@@ -19,11 +21,12 @@ public class Customer {
     protected String ward;
     protected String district;
     protected String city;
+    protected Date joindate;
 
     public Customer() {
     }
 
-    public Customer(int userID, String username, int position, String email, boolean gender, String phone, String exactloc, String ward, String district, String city) {
+    public Customer(int userID, String username, int position, String email, boolean gender, String phone, String exactloc, String ward, String district, String city, Date joindate) {
         this.userID = userID;
         this.username = username;
         this.position = position;
@@ -34,6 +37,7 @@ public class Customer {
         this.ward = ward;
         this.district = district;
         this.city = city;
+        this.joindate = joindate;
     }
     
     public int getUserID() {
@@ -115,6 +119,12 @@ public class Customer {
     public void setCity(String city) {
         this.city = city;
     }
-    
-    
+
+    public Date getJoindate() {
+        return joindate;
+    }
+
+    public void setJoindate(Date joindate) {
+        this.joindate = joindate;
+    }
 }

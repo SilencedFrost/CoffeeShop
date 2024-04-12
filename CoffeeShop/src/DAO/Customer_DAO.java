@@ -154,7 +154,7 @@ public class Customer_DAO {
         }
     }
     
-        public static ArrayList<Customer> loadAllCustomers() {
+    public static ArrayList<Customer> loadAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
 
         try (Connection con = Tools.GetCon();
@@ -172,9 +172,10 @@ public class Customer_DAO {
                 String ward = rs.getString("ward");
                 String district = rs.getString("district");
                 String city = rs.getString("city");
+                Date joindate = rs.getDate("joindate");
 
                 // Create a new Customer object excluding the password field
-                Customer customer = new Customer(userID, username, position, email, gender, phone, exactloc, ward, district, city);
+                Customer customer = new Customer(userID, username, position, email, gender, phone, exactloc, ward, district, city, joindate);
                 customers.add(customer);
             }
         } catch (SQLException ex) {
@@ -186,7 +187,7 @@ public class Customer_DAO {
         
     public static DefaultTableModel loadToTable(ArrayList<Customer> customers) {
         // Define column names for the table
-        String[] columnNames = {"UserID", "Username", "Position", "Email", "Gender", "Phone", "Exact Location", "Ward", "District", "City"};
+        String[] columnNames = {"UserID", "Username", "Position", "Email", "Gender", "Phone", "Exact Location", "Ward", "District", "City", "Join date"};
 
         // Initialize data array for the table
         Object[][] data = new Object[customers.size()][columnNames.length];
@@ -204,6 +205,7 @@ public class Customer_DAO {
             data[i][7] = customer.getWard();
             data[i][8] = customer.getDistrict();
             data[i][9] = customer.getCity();
+            data[i][10] = customer.getJoindate();
         }
 
         // Create DefaultTableModel with data and column names

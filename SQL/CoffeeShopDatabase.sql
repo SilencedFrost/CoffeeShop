@@ -28,6 +28,7 @@ create table Customer
 	ward nvarchar(30),
 	district nvarchar(30),
 	city nvarchar(30),
+	joindate date,
 	primary key(userID)
 );
 go
@@ -228,6 +229,17 @@ begin
 	(select district from inserted), 
 	(select city from inserted))
 end
+go
+
+create or alter trigger Customer_join_date on Customer
+after insert
+as
+begin
+    update Customer
+    set joindate = getdate()
+    from inserted
+    where Customer.userID = inserted.userID;
+end;
 go
 
 -- Procs
