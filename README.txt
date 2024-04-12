@@ -13,6 +13,9 @@ Product: Nguyen Quoc Minh
 EmployeeMenu: Nguyen Quoc Minh
 Login: Nguyen Quoc Minh
 ManageEmployees: Nguyen Quoc Minh
+ManageUsers: Nguyen Quoc Minh
+ManageCategories: Nguyen Quoc Minh
+ManageDrinks: Nguyen Quoc Minh
 ManagerMenu: Nguyen Quoc Minh
 Register: Nguyen Quoc Minh
 RoundJPasswordField: Nguyen Quoc Minh
