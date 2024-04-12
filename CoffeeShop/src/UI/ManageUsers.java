@@ -9,6 +9,7 @@ import Models.Customer;
 import Utils.GetRegex;
 import Utils.Tools;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author thnrg
  */
-public class ManageEmployees extends javax.swing.JDialog {
+public class ManageUsers extends javax.swing.JDialog {
 
     /**
      * Creates new form ManageEmployees
@@ -27,7 +28,7 @@ public class ManageEmployees extends javax.swing.JDialog {
      * @param modal
      * boolean, true/false to enforce strict modality
      */
-    public ManageEmployees(java.awt.Frame parent, boolean modal) {
+    public ManageUsers(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         onRun();
@@ -61,12 +62,19 @@ public class ManageEmployees extends javax.swing.JDialog {
         rdoMale = new javax.swing.JRadioButton();
         rdoFemale = new javax.swing.JRadioButton();
         btnResetPass = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtExactLoc = new javax.swing.JTextField();
+        txtWard = new javax.swing.JTextField();
+        txtDistrict = new javax.swing.JTextField();
+        txtCity = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmployees = new javax.swing.JTable();
         btnNew = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -113,7 +121,11 @@ public class ManageEmployees extends javax.swing.JDialog {
 
         txtUsername.setEditable(false);
 
+        txtEmail.setEditable(false);
+
         jLabel6.setText("Phone");
+
+        txtPhone.setEditable(false);
 
         jLabel7.setText("Password");
 
@@ -121,9 +133,11 @@ public class ManageEmployees extends javax.swing.JDialog {
 
         grGender.add(rdoMale);
         rdoMale.setText("Male");
+        rdoMale.setEnabled(false);
 
         grGender.add(rdoFemale);
         rdoFemale.setText("Female");
+        rdoFemale.setEnabled(false);
 
         btnResetPass.setText("Reset");
         btnResetPass.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +145,22 @@ public class ManageEmployees extends javax.swing.JDialog {
                 btnResetPassActionPerformed(evt);
             }
         });
+
+        jLabel3.setText("Exactloc");
+
+        jLabel8.setText("Ward");
+
+        jLabel9.setText("District");
+
+        jLabel10.setText("City");
+
+        txtExactLoc.setEditable(false);
+
+        txtWard.setEditable(false);
+
+        txtDistrict.setEditable(false);
+
+        txtCity.setEditable(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -140,13 +170,17 @@ public class ManageEmployees extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtUserID)
@@ -154,7 +188,11 @@ public class ManageEmployees extends javax.swing.JDialog {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnResetPass, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))))
+                                .addComponent(btnResetPass, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+                            .addComponent(txtExactLoc)
+                            .addComponent(txtWard)
+                            .addComponent(txtDistrict)
+                            .addComponent(txtCity)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,7 +208,7 @@ public class ManageEmployees extends javax.swing.JDialog {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -187,16 +225,31 @@ public class ManageEmployees extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(rdoMale)
                     .addComponent(rdoFemale))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(38, 38, 38))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtExactLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtWard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtDistrict, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         tblEmployees.setModel(new javax.swing.table.DefaultTableModel(
@@ -235,14 +288,6 @@ public class ManageEmployees extends javax.swing.JDialog {
             }
         });
 
-        btnUpdate.setText("Update");
-        btnUpdate.setEnabled(false);
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-
         btnCancel.setText("Cancel");
         btnCancel.setEnabled(false);
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -269,8 +314,6 @@ public class ManageEmployees extends javax.swing.JDialog {
                         .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdate)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -279,15 +322,14 @@ public class ManageEmployees extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNew)
                     .addComponent(btnAdd)
                     .addComponent(btnDelete)
-                    .addComponent(btnUpdate)
                     .addComponent(btnCancel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -304,7 +346,7 @@ public class ManageEmployees extends javax.swing.JDialog {
         else
         {
             // first filter by position, then filter by username/userid
-            loadTable(Customer_DAO.filterCustomers(Customer_DAO.filterCustomers(Customer_DAO.loadAllCustomers(), "position", 1), "username-userid", txtSearch.getText()));
+            loadTable(Customer_DAO.filterCustomers(Customer_DAO.filterCustomers(Customer_DAO.loadAllCustomers(), "position", 0), "username-userid", txtSearch.getText()));
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -313,7 +355,6 @@ public class ManageEmployees extends javax.swing.JDialog {
         btnNew.setEnabled(false);
         btnAdd.setEnabled(true);
         btnDelete.setEnabled(false);
-        btnUpdate.setEnabled(false);
         btnSearch.setEnabled(false);
         btnResetPass.setEnabled(false);
         btnCancel.setEnabled(true);
@@ -324,19 +365,21 @@ public class ManageEmployees extends javax.swing.JDialog {
         //Clear text fields
         clearTxtFields();
         
-        grGender.setSelected(rdoMale.getModel(), true);
-
+        rdoMale.setSelected(true);
+        rdoMale.setEnabled(true);
+        rdoFemale.setEnabled(true);
         
         //Change info of position field
         txtPassword.setText("DefaultPa$$");
         txtSearch.setEnabled(false);
+        txtEmail.setEditable(true);
         txtUsername.setEditable(true);
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         if(checkFields())
         {
-            boolean state = Customer_DAO.AddUser(txtUsername.getText(), txtEmail.getText(), txtPassword.getText(), 1, rdoMale.isSelected(), txtPhone.getText());
+            boolean state = Customer_DAO.AddUser(txtUsername.getText(), txtEmail.getText(), txtPassword.getText(), 0, rdoMale.isSelected());
             if(!state)
             {
                 JOptionPane.showMessageDialog(this, "User already exist");
@@ -346,13 +389,15 @@ public class ManageEmployees extends javax.swing.JDialog {
                 btnNew.setEnabled(true);
                 btnAdd.setEnabled(false);
                 btnDelete.setEnabled(true);
-                btnUpdate.setEnabled(true);
                 btnSearch.setEnabled(true);
                 btnResetPass.setEnabled(true);
                 btnCancel.setEnabled(false);
                 clearTxtFields();
                 txtSearch.setEnabled(true);
                 txtUsername.setEditable(false);
+                txtEmail.setEditable(false);
+                rdoFemale.setEnabled(false);
+                rdoMale.setEnabled(false);
                 loadTable();
             }
         }
@@ -362,6 +407,8 @@ public class ManageEmployees extends javax.swing.JDialog {
         txtPassword.setEditable(true);
         txtPassword.setText("DefaultPa$$");
         txtPassword.setEditable(false);
+        Customer_DAO.resetPass(Integer.parseInt(txtUserID.getText()));
+        JOptionPane.showMessageDialog(this, "Password reset successfully!\nThe new password is DefaultPa$$");
     }//GEN-LAST:event_btnResetPassActionPerformed
 
     private boolean checkFields()
@@ -371,15 +418,10 @@ public class ManageEmployees extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Invalid username");
             txtUsername.requestFocus();
         }
-        else if (!txtEmail.getText().matches(GetRegex.getEmailRegex()))
+        if(!txtEmail.getText().matches(GetRegex.getEmailRegex()))
         {
-            JOptionPane.showMessageDialog(this, "Invalid email");
+            JOptionPane.showMessageDialog(this, "Invalid email!");
             txtEmail.requestFocus();
-        }
-        else if (!txtPhone.getText().matches(GetRegex.getPhoneRegex()))
-        {
-            JOptionPane.showMessageDialog(this, "Invalid phone number");
-            txtPhone.requestFocus();
         }
         else
         {
@@ -392,7 +434,6 @@ public class ManageEmployees extends javax.swing.JDialog {
         btnNew.setEnabled(true);
         btnAdd.setEnabled(false);
         btnDelete.setEnabled(true);
-        btnUpdate.setEnabled(true);
         btnSearch.setEnabled(true);
         btnResetPass.setEnabled(true);
         btnCancel.setEnabled(false);
@@ -407,24 +448,12 @@ public class ManageEmployees extends javax.swing.JDialog {
         loadTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        if(!txtPassword.getText().equals(""))
-        {
-            Customer_DAO.resetPass(Integer.parseInt(txtUserID.getText()));
-        }
-        if(checkFields())
-        {
-            Customer_DAO.updateUser(Integer.parseInt(txtUserID.getText()), txtEmail.getText(), rdoMale.isSelected(), txtPhone.getText());
-            loadTable();
-        }
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
     private void onRun()
     {
         btnSearch.requestFocus();
         loadTable();
         LoadItems();
-         tblEmployees.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+        tblEmployees.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
              updateButtonState();
              LoadItems();
         });
@@ -439,7 +468,6 @@ public class ManageEmployees extends javax.swing.JDialog {
     private void updateButtonState()
     {
         btnDelete.setEnabled(tblEmployees.getSelectedRow() != -1);
-        btnUpdate.setEnabled(tblEmployees.getSelectedRow() != -1);
     }
     
     private void LoadItems()
@@ -464,6 +492,10 @@ public class ManageEmployees extends javax.swing.JDialog {
                 rdoFemale.setSelected(true);
             }
             txtPhone.setText(user.getPhone());
+            txtExactLoc.setText(user.getExactloc());
+            txtCity.setText(user.getCity());
+            txtWard.setText(user.getWard());
+            txtDistrict.setText(user.getDistrict());
             btnResetPass.setEnabled(true);
         }
     }
@@ -476,16 +508,21 @@ public class ManageEmployees extends javax.swing.JDialog {
         txtEmail.setText("");
         grGender.clearSelection();
         txtPhone.setText("");
+        txtExactLoc.setText("");
+        txtCity.setText("");
+        txtDistrict.setText("");
+        txtWard.setText("");
+        grGender.clearSelection();
     }
     
     private void loadTable()
     {
-        tblEmployees.setModel(Tools.trimColumns(Customer_DAO.loadToTable(Customer_DAO.filterCustomers(Customer_DAO.loadAllCustomers(), "position", 1)), 6));
+        tblEmployees.setModel(Customer_DAO.loadToTable(Customer_DAO.filterCustomers(Customer_DAO.loadAllCustomers(), "position", 0)));
     }
     
     private void loadTable(ArrayList<Customer> arr)
     {
-        tblEmployees.setModel(Tools.trimColumns(Customer_DAO.loadToTable(arr), 6));
+        tblEmployees.setModel(Customer_DAO.loadToTable(arr));
     }
        
     /**
@@ -503,7 +540,7 @@ public class ManageEmployees extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ManageEmployees dialog = new ManageEmployees(new javax.swing.JFrame(), true);
+                ManageUsers dialog = new ManageUsers(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -522,25 +559,32 @@ public class ManageEmployees extends javax.swing.JDialog {
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnResetPass;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup grGender;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rdoFemale;
     private javax.swing.JRadioButton rdoMale;
     private javax.swing.JTable tblEmployees;
+    private javax.swing.JTextField txtCity;
+    private javax.swing.JTextField txtDistrict;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtExactLoc;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtUserID;
     private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtWard;
     // End of variables declaration//GEN-END:variables
 }

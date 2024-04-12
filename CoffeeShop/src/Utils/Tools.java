@@ -94,4 +94,78 @@ public class Tools
             
         }
     }
+
+    /**
+     *
+     * @param cboCity
+     * @param cboDistrict
+     * @param cboWard
+     * @param status: 0 - update everything, 1 - update District, Ward, 2 - update Ward
+     */
+    public static void addressSelector(JComboBox cboCity, JComboBox cboDistrict, JComboBox cboWard, int status)
+    {
+        if(status <= 0)
+        {
+            ArrayList<String> cities = new ArrayList();
+            try(Connection con = Tools.GetCon())
+            {
+                
+                Statement stm = con.createStatement();
+                ResultSet rs = stm.executeQuery("Select full_name from provinces");
+                
+                while (rs.next()) {
+                    String fullName = rs.getString("full_name");
+                    cities.add(fullName);
+                }
+                 
+                
+            }
+            catch (Exception ex) 
+            {
+            }
+            loadComboBox(cboCity, cities);
+        }
+        
+        if(status <= 1)
+        {
+            ArrayList<String> districts = new ArrayList();
+            try(Connection con = Tools.GetCon())
+            {
+                
+                PreparedStatement stm = con.prepareStatement("Select full_name from districts where province_code in (Select code from provinces where full_name like ?)");
+                stm.setNString(1, cboCity.getSelectedItem().toString());
+                ResultSet rs = stm.executeQuery();
+                
+                while (rs.next()) {
+                    String fullName = rs.getString("full_name");
+                    districts.add(fullName);
+                }
+            }
+            catch(Exception ex)
+            {
+            }
+            loadComboBox(cboDistrict, districts);
+        }
+        
+        if(status <= 2)
+        {
+            ArrayList<String> wards = new ArrayList();
+            try(Connection con = Tools.GetCon())
+            {
+                
+                PreparedStatement stm = con.prepareStatement("Select full_name from wards where district_code in (Select code from districts where full_name like ?)");
+                stm.setNString(1, cboDistrict.getSelectedItem().toString());
+                ResultSet rs = stm.executeQuery();
+                
+                while (rs.next()) {
+                    String fullName = rs.getString("full_name");
+                    wards.add(fullName);
+                }
+            }
+            catch(Exception ex)
+            {
+            }
+            loadComboBox(cboWard, wards);
+        }
+    }
 }

@@ -85,6 +85,31 @@ public class Customer_DAO {
         return false;
     }
     
+    public static boolean AddUser(String username, String email, String password, int position, boolean gender)
+    {
+        try (Connection con = Tools.GetCon()) {
+        CallableStatement cstmt = con.prepareCall("{CALL AddUser(?, ?, ?, ?, ?, null, ?)}");
+
+        cstmt.setString(1, username);
+        cstmt.setString(2, email);
+        cstmt.setString(3, password);
+        cstmt.setInt(4, position);
+        cstmt.setBoolean(5, gender);
+        cstmt.registerOutParameter(6, Types.INTEGER); // Output parameter for success/fail
+
+        cstmt.execute();
+
+        int success = cstmt.getInt(6); // Retrieve the output parameter
+
+        return success == 1;
+        } 
+        catch (Exception ex) 
+        {
+        ex.printStackTrace();
+        }
+        return false;
+    }
+    
     public static boolean AddUser(String username, String email, String password, int position, boolean gender, String phone)
     {
         try (Connection con = Tools.GetCon()) {
