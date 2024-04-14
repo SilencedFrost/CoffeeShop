@@ -38,7 +38,7 @@ public class Login extends javax.swing.JFrame {
         txtPassword = new RoundJPasswordField(30, "Password");
         jPanel4 = new javax.swing.JPanel();
         lblSignUp = new javax.swing.JLabel();
-        lblSignUp1 = new javax.swing.JLabel();
+        lblForgotPass = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
         lblWarning = new javax.swing.JLabel();
 
@@ -90,12 +90,12 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        lblSignUp1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        lblSignUp1.setForeground(new java.awt.Color(102, 102, 102));
-        lblSignUp1.setText("Forgot password?");
-        lblSignUp1.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblForgotPass.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        lblForgotPass.setForeground(new java.awt.Color(102, 102, 102));
+        lblForgotPass.setText("Forgot password?");
+        lblForgotPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblSignUp1MouseClicked(evt);
+                lblForgotPassMouseClicked(evt);
             }
         });
 
@@ -113,7 +113,7 @@ public class Login extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblSignUp1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblForgotPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblSignUp, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -124,7 +124,7 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblSignUp1)
+                        .addComponent(lblForgotPass)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblSignUp)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -177,9 +177,11 @@ public class Login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUpMouseClicked
+        //Open register form, close this form
         new Register().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblSignUpMouseClicked
@@ -194,33 +196,34 @@ public class Login extends javax.swing.JFrame {
         }
         else
         {
-            int role = Customer_DAO.Login(txtUsername.getText(), new String(txtPassword.getPassword()));
-            System.out.println(role);
+            //Get role of user
+            int role = Customer_DAO.login(txtUsername.getText(), new String(txtPassword.getPassword()));
             switch(role)
             {
+                //Wrong login returns -1
                 case -1 ->                 
                 {
                     lblWarning.setText("Username or password is incorrect!");
                 }
+                //Manager level login returns 2
                 case 2 ->                 
                 {
                     ManagerMenu MngMN = new ManagerMenu();
-                    MngMN.login(34);
+                    MngMN.login(Customer_DAO.getUserID(txtUsername.getText()));
                     MngMN.setVisible(true);
                     this.dispose();
                 }
-                default -> {}
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void lblSignUp1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUp1MouseClicked
+    private void lblForgotPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotPassMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblSignUp1MouseClicked
+    }//GEN-LAST:event_lblForgotPassMouseClicked
     
     private void OnRun()
     {
-        Tools.SetFrameToCenter(this);
+        //Redirect focus away from RoundJLabel
         btnLogin.requestFocus();
     }
     
@@ -249,8 +252,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lblForgotPass;
     private javax.swing.JLabel lblSignUp;
-    private javax.swing.JLabel lblSignUp1;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblWarning;
     private javax.swing.JPasswordField txtPassword;

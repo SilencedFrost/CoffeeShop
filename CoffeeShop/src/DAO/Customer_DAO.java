@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  * @author thnrg
  */
 public class Customer_DAO {
-    public static int Login(String username, String pass)
+    public static int login(String username, String pass)
     {
         try(Connection con = Tools.GetCon())
         {
@@ -33,6 +33,23 @@ public class Customer_DAO {
             ex.printStackTrace();
         }
         return -1;
+    }
+    
+    public static int getUserID(String username)
+    {
+        try(Connection con = Tools.GetCon())
+        {
+            PreparedStatement stm = con.prepareStatement("select userid from customer where username like ?");
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            rs.next();
+            return rs.getInt("userid");
+        }
+        catch(Exception ex)
+        {
+            
+        }
+        return 0;
     }
     
     public static void deleteUser(int userid)

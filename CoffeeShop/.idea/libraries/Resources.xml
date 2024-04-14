@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Resources">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/Resources/mssql-jdbc-9.4.1.jre11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/Resources/flatlaf-3.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

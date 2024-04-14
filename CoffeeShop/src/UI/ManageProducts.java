@@ -12,6 +12,8 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
@@ -77,6 +79,7 @@ public class ManageProducts extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Manage Products");
+        setResizable(false);
 
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -168,7 +171,7 @@ public class ManageProducts extends javax.swing.JDialog {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +198,7 @@ public class ManageProducts extends javax.swing.JDialog {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPicture, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                    .addComponent(txtPicture, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnChooseImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -220,7 +223,7 @@ public class ManageProducts extends javax.swing.JDialog {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,6 +237,11 @@ public class ManageProducts extends javax.swing.JDialog {
         txtProductID.setEditable(false);
 
         cboSize.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "M", "L" }));
+        cboSize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cboSizeMouseClicked(evt);
+            }
+        });
 
         txtAddDate.setEditable(false);
 
@@ -377,6 +385,7 @@ public class ManageProducts extends javax.swing.JDialog {
         btnUpdate.setEnabled(false);
         btnSearch.setEnabled(false);
         btnCancel.setEnabled(true);
+        btnChooseImage.setEnabled(true);
 
         //Clear tables
         tblProduct.setModel(new DefaultTableModel());
@@ -384,6 +393,7 @@ public class ManageProducts extends javax.swing.JDialog {
         //Clear text fields
         clearTxtFields();
 
+        cboSize.setEnabled(false);
 
         txtSearch.setEnabled(false);
         txtProductID.setEditable(true);
@@ -411,31 +421,30 @@ public class ManageProducts extends javax.swing.JDialog {
             }
             else
             {
-                btnNew.setEnabled(true);
-                btnAdd.setEnabled(false);
-                btnDelete.setEnabled(true);
-                btnUpdate.setEnabled(true);
-                btnSearch.setEnabled(true);
-                btnCancel.setEnabled(false);
-                clearTxtFields();
-                txtSearch.setEnabled(true);
-                loadTable();
+                resetButtonsAndFields();
             }
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        resetButtonsAndFields();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void resetButtonsAndFields()
+    {
         btnNew.setEnabled(true);
         btnAdd.setEnabled(false);
         btnDelete.setEnabled(true);
         btnUpdate.setEnabled(true);
         btnSearch.setEnabled(true);
         btnCancel.setEnabled(false);
+        btnChooseImage.setEnabled(false);
         clearTxtFields();
         txtSearch.setEnabled(true);
+        cboSize.setEnabled(true);
         loadTable();
-    }//GEN-LAST:event_btnCancelActionPerformed
-
+    }
+    
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         Product_DAO.deleteProduct(txtProductID.getText());
         loadTable();
@@ -456,6 +465,14 @@ public class ManageProducts extends javax.swing.JDialog {
             // Do something with the selected file
         }
     }//GEN-LAST:event_btnChooseImageActionPerformed
+
+    private void cboSizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboSizeMouseClicked
+        if(!cboSize.isEnabled())
+        {
+            JOptionPane.showMessageDialog(this, "Modify size with productID!");
+            txtProductID.requestFocus();
+        }
+    }//GEN-LAST:event_cboSizeMouseClicked
 
     private boolean checkFields()
     {
@@ -489,6 +506,7 @@ public class ManageProducts extends javax.swing.JDialog {
     {
         loadTable();
         btnSearch.requestFocus();
+        
         tblProduct.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             updateButtonState();
             LoadItems();
@@ -498,6 +516,21 @@ public class ManageProducts extends javax.swing.JDialog {
         tblProduct.getModel().addTableModelListener((TableModelEvent e) -> {
             updateButtonState();
             LoadItems();
+        });
+        
+        txtProductID.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                setSize();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                setSize();
+            }
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                setSize();
+            }
         });
     }
     
@@ -533,6 +566,25 @@ public class ManageProducts extends javax.swing.JDialog {
             txtDesc.setText(pd.getPddesc());
             chkVisible.setSelected(pd.isVisibility());
             btnChooseImage.setEnabled(true);
+        }
+    }
+    
+    private void setSize()
+    {
+        if(txtProductID.getText().matches(GetRegex.getProductIDRegex()) && txtProductID.isEditable())
+        {
+            switch (txtProductID.getText().substring(txtProductID.getText().length() - 1)) 
+            {
+                case "S" ->                 {
+                    cboSize.setSelectedIndex(0);
+                }
+                case "M" ->                 {
+                    cboSize.setSelectedIndex(1);
+                }
+                case "L" ->                 {
+                    cboSize.setSelectedIndex(2);
+                }
+            }
         }
     }
     

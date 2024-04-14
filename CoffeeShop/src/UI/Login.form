@@ -8,7 +8,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -182,7 +182,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblSignUp1" max="32767" attributes="0"/>
+                          <Component id="lblForgotPass" max="32767" attributes="0"/>
                           <Component id="lblSignUp" pref="186" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="32" max="32767" attributes="0"/>
@@ -196,7 +196,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="btnLogin" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblSignUp1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblForgotPass" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblSignUp" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -221,7 +221,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblSignUpMouseClicked"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblSignUp1">
+            <Component class="javax.swing.JLabel" name="lblForgotPass">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial Rounded MT Bold" size="14" style="0"/>
@@ -232,7 +232,7 @@
                 <Property name="text" type="java.lang.String" value="Forgot password?"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblSignUp1MouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblForgotPassMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnLogin">
