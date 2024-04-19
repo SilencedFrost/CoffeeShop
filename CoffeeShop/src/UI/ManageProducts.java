@@ -8,7 +8,9 @@ import DAO.Product_DAO;
 import Models.Product;
 import Utils.GetRegex;
 import Utils.Tools;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -17,6 +19,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.imageio.ImageIO;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -68,7 +72,7 @@ public class ManageProducts extends javax.swing.JDialog {
         txtPicture = new javax.swing.JTextField();
         btnChooseImage = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        imgPicture = new javax.swing.JLabel();
         txtProductID = new javax.swing.JTextField();
         txtProductName = new javax.swing.JTextField();
         txtPrice = new javax.swing.JTextField();
@@ -164,6 +168,7 @@ public class ManageProducts extends javax.swing.JDialog {
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         txtDesc.setColumns(20);
+        txtDesc.setLineWrap(true);
         txtDesc.setRows(5);
         jScrollPane2.setViewportView(txtDesc);
 
@@ -185,6 +190,7 @@ public class ManageProducts extends javax.swing.JDialog {
         jLabel7.setText("Image path");
 
         btnChooseImage.setText("Choose");
+        btnChooseImage.setEnabled(false);
         btnChooseImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChooseImageActionPerformed(evt);
@@ -217,17 +223,23 @@ public class ManageProducts extends javax.swing.JDialog {
 
         jPanel4.add(jPanel5);
 
-        jButton1.setEnabled(false);
+        imgPicture.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(imgPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(imgPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         jPanel4.add(jPanel6);
@@ -409,6 +421,7 @@ public class ManageProducts extends javax.swing.JDialog {
         chkVisible.setSelected(true);
         txtDesc.setText("");
         txtPicture.setText("");
+        imgPicture.setIcon(null);
     }
     
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -453,19 +466,33 @@ public class ManageProducts extends javax.swing.JDialog {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
     if(checkFields())
         {
+            Product_DAO.updateProduct(txtProductID.getText(), txtProductName.getText(), txtDesc.getText(), chkVisible.isSelected(), Float.parseFloat(txtPrice.getText()), txtPicture.getText());
             loadTable();
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png");
+        fileChooser.setFileFilter(filter);
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedfile = fileChooser.getSelectedFile();
-            // Do something with the selected file
+            File selFile = fileChooser.getSelectedFile();
+            String desDir = "src/images/";
+            String desFileName = txtProductID.getText() + ".png";
+            try {
+                BufferedImage image = ImageIO.read(selFile);
+                File outputFile = new File(desDir, desFileName);
+                ImageIO.write(image, "png", outputFile);
+                System.out.println("Image converted to PNG and saved to: " + outputFile.getAbsolutePath());
+                txtPicture.setText(desDir + desFileName);
+                Tools.SetIcon(imgPicture, desDir + desFileName);
+            } catch (IOException e) {
+                System.err.println("Error converting image to PNG: " + e.getMessage());
+            }
         }
     }//GEN-LAST:event_btnChooseImageActionPerformed
-
+    
     private void cboSizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboSizeMouseClicked
         if(!cboSize.isEnabled())
         {
@@ -565,7 +592,12 @@ public class ManageProducts extends javax.swing.JDialog {
             txtAddDate.setText(pd.getAdddate().toString());
             txtDesc.setText(pd.getPddesc());
             chkVisible.setSelected(pd.isVisibility());
+            txtPicture.setText(pd.getPicture());
             btnChooseImage.setEnabled(true);
+            if(pd.getPicture() != null)
+            {
+                Tools.SetIcon(imgPicture, pd.getPicture());
+            }
         }
     }
     
@@ -641,7 +673,7 @@ public class ManageProducts extends javax.swing.JDialog {
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cboSize;
     private javax.swing.JCheckBox chkVisible;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel imgPicture;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

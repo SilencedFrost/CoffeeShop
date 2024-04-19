@@ -50,7 +50,6 @@ public class Tools
         Image image = icon.getImage();
         Image scaled = image.getScaledInstance(container.getWidth(), container.getHeight(), java.awt.Image.SCALE_SMOOTH);
         container.setIcon(new ImageIcon(scaled));
-        
     }
     
     public static void SetFrameToCenter (JFrame frame)

@@ -4,7 +4,14 @@
  */
 package UI;
 
+import Models.ProductDisplay;
 import Utils.Tools;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.LayoutManager;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -17,8 +24,8 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public MainMenu() {
         initComponents();
+        OnRun();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,8 +43,9 @@ public class MainMenu extends javax.swing.JFrame {
         btnRegister = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        sidePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
+        mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -46,7 +54,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(68, 37, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 720));
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel4.setBackground(new java.awt.Color(68, 37, 0));
 
@@ -66,6 +74,7 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(68, 37, 0));
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("CoffeeShop");
 
@@ -149,27 +158,46 @@ public class MainMenu extends javax.swing.JFrame {
             .addGap(0, 34, Short.MAX_VALUE)
         );
 
-        jPanel3.setBackground(new java.awt.Color(254, 220, 132));
+        sidePanel.setBackground(new java.awt.Color(254, 220, 132));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
+        sidePanel.setLayout(sidePanelLayout);
+        sidePanelLayout.setHorizontalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 242, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        sidePanelLayout.setVerticalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 628, Short.MAX_VALUE)
         );
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setAlignmentX(0.0F);
+        jScrollPane1.setAlignmentY(0.0F);
+
+        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1032, Short.MAX_VALUE)
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 622, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(mainPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -180,16 +208,28 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE))))
+                    .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void OnRun()
+    {
+        loadItems();
+    }
+    
+    private void loadItems()
+    {
+        LayoutManager flow = new FlowLayout();
+        mainPanel.setLayout(flow);
+        mainPanel.setPreferredSize(new Dimension(jScrollPane1.getWidth(), mainPanel.getPreferredSize().height));
+        mainPanel.add(new ProductDisplay("heh", 1, "heh").getPanel());
+        pack();
+    }
+    
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         new Login().setVisible(true);
         this.dispose();
@@ -226,10 +266,11 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel sidePanel;
     // End of variables declaration//GEN-END:variables
 }

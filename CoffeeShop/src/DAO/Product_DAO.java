@@ -143,4 +143,23 @@ public class Product_DAO {
         }
         return false;
     }
+    
+    public static void updateProduct(String productID, String pdName, String pdDesc, boolean visibility, float price, String picture)
+    {
+        try(Connection con = Tools.GetCon())
+        {
+            PreparedStatement stm = con.prepareStatement("Update Product set pdname = ?, pddesc = ?, visibility = ?, price = ?, picture = ? where productid = ?");
+            stm.setNString(1, pdName);
+            stm.setNString(2, pdDesc);
+            stm.setBoolean(3, visibility);
+            stm.setFloat(4, price);
+            stm.setString(5, picture);
+            stm.setString(6, productID);
+            stm.execute();
+        }
+        catch (Exception ex) 
+        {
+            ex.printStackTrace();
+        }
+    }
 }
