@@ -52,6 +52,23 @@ public class Customer_DAO {
         return 0;
     }
     
+    public static String getUserName(int userID)
+    {
+        try(Connection con = Tools.getCon())
+        {
+            PreparedStatement stm = con.prepareStatement("Select username from customer where userid = ?");
+            stm.setInt(1, userID);
+            ResultSet rs = stm.executeQuery();
+            rs.next();
+            return rs.getString("username");
+        }
+        catch(Exception ex)
+        {
+            
+        }
+        return null;
+    }
+    
     public static void deleteUser(int userid)
     {
         try (Connection con = Tools.getCon())
@@ -182,6 +199,7 @@ public class Customer_DAO {
             while (rs.next()) {
                 int userID = rs.getInt("userID");
                 String username = rs.getString("username");
+                String profilepic = rs.getString("profilepic");
                 int position = rs.getInt("position");
                 String email = rs.getString("email");
                 boolean gender = rs.getBoolean("gender");
@@ -193,7 +211,7 @@ public class Customer_DAO {
                 Date joindate = rs.getDate("joindate");
 
                 // Create a new Customer object excluding the password field
-                Customer customer = new Customer(userID, username, position, email, gender, phone, exactloc, ward, district, city, joindate);
+                Customer customer = new Customer(userID, username, profilepic, position, email, gender, phone, exactloc, ward, district, city, joindate);
                 customers.add(customer);
             }
         } catch (SQLException ex) {
@@ -205,7 +223,7 @@ public class Customer_DAO {
         
     public static DefaultTableModel loadToTable(ArrayList<Customer> customers) {
         // Define column names for the table
-        String[] columnNames = {"UserID", "Username", "Position", "Email", "Gender", "Phone", "Exact Location", "Ward", "District", "City", "Join date"};
+        String[] columnNames = {"UserID", "Username", "Profile", "Position", "Email", "Gender", "Phone", "Exact Location", "Ward", "District", "City", "Join date"};
 
         // Initialize data array for the table
         Object[][] data = new Object[customers.size()][columnNames.length];
@@ -215,15 +233,16 @@ public class Customer_DAO {
             Customer customer = customers.get(i);
             data[i][0] = customer.getUserID();
             data[i][1] = customer.getUsername();
-            data[i][2] = customer.getPosition();
-            data[i][3] = customer.getEmail();
-            data[i][4] = customer.isGender() ? "Male" : "Female";
-            data[i][5] = customer.getPhone();
-            data[i][6] = customer.getExactloc();
-            data[i][7] = customer.getWard();
-            data[i][8] = customer.getDistrict();
-            data[i][9] = customer.getCity();
-            data[i][10] = customer.getJoindate();
+            data[i][2] = customer.getProfilepic();
+            data[i][3] = customer.getPosition();
+            data[i][4] = customer.getEmail();
+            data[i][5] = customer.isGender() ? "Male" : "Female";
+            data[i][6] = customer.getPhone();
+            data[i][7] = customer.getExactloc();
+            data[i][8] = customer.getWard();
+            data[i][9] = customer.getDistrict();
+            data[i][10] = customer.getCity();
+            data[i][11] = customer.getJoindate();
         }
 
         // Create DefaultTableModel with data and column names

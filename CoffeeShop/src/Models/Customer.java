@@ -13,6 +13,7 @@ import java.util.Date;
 public class Customer {
     protected int userID;
     protected String username;
+    protected String profilepic;
     protected int position;
     protected String email;
     protected boolean gender;
@@ -26,9 +27,10 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int userID, String username, int position, String email, boolean gender, String phone, String exactloc, String ward, String district, String city, Date joindate) {
+    public Customer(int userID, String username, String profilepic, int position, String email, boolean gender, String phone, String exactloc, String ward, String district, String city, Date joindate) {
         this.userID = userID;
         this.username = username;
+        this.profilepic = profilepic;
         this.position = position;
         this.email = email;
         this.gender = gender;
@@ -38,6 +40,14 @@ public class Customer {
         this.district = district;
         this.city = city;
         this.joindate = joindate;
+    }
+
+    public String getProfilepic() {
+        return profilepic;
+    }
+
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
     }
     
     public int getUserID() {

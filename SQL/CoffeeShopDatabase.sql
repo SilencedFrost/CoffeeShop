@@ -19,6 +19,7 @@ create table Customer
 (
 	userID int identity (1, 1),
 	username varchar(50) UNIQUE not null,
+	profilepic varchar(50),
 	position int not null,
 	email varchar(254),
 	pass varchar(64) not null,
