@@ -16,7 +16,7 @@ import java.sql.*;
 public class Product_DAO {
     public static DefaultTableModel loadToTable(ArrayList<Product> products) {
         // Define column names for the table
-        String[] columnNames = {"ProductID", "Name", "Description", "Visibility", "Add Date", "Price", "Picture"};
+        String[] columnNames = {"ProductID", "Name", "Description", "Visibility", "Add Date", "Price", "Picture", "Category"};
 
         // Initialize data array for the table
         Object[][] data = new Object[products.size()][columnNames.length];
@@ -31,6 +31,7 @@ public class Product_DAO {
             data[i][4] = product.getAdddate();
             data[i][5] = product.getPrice();
             data[i][6] = product.getPicture();
+            data[i][7] = product.getCategory();
         }
 
         // Create DefaultTableModel with data and column names
@@ -67,6 +68,20 @@ public class Product_DAO {
                         filteredProducts.add(product);
                     }
                 }
+                case "visibility" ->
+                {
+                    if(product.isVisibility() == (boolean) filterValue)
+                    {
+                        filteredProducts.add(product);
+                    }
+                }
+                case "category" ->
+                {
+                    if(product.getCategory() == (int) filterValue)
+                    {
+                        filteredProducts.add(product);
+                    }
+                }
             }
         }
 
@@ -76,7 +91,7 @@ public class Product_DAO {
     public static ArrayList<Product> loadAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
 
-        try (Connection con = Tools.GetCon();
+        try (Connection con = Tools.getCon();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM Product")) 
         {
@@ -90,9 +105,10 @@ public class Product_DAO {
                 Date adddate = rs.getDate("adddate");
                 float price = rs.getFloat("price");
                 String picture = rs.getString("picture");
+                int category = rs.getInt("category");
 
                 // Create a new Product object
-                Product product = new Product(productID, pdname, pddesc, visibility, adddate, price, picture);
+                Product product = new Product(productID, pdname, pddesc, visibility, adddate, price, picture, category);
                 products.add(product);
             }
         } 
@@ -106,7 +122,7 @@ public class Product_DAO {
     
     public static void deleteProduct(String productID)
     {
-        try(Connection con = Tools.GetCon())
+        try(Connection con = Tools.getCon())
         {
             PreparedStatement stm = con.prepareStatement("delete product where productid like ?");
             stm.setString(1, productID);
@@ -120,7 +136,7 @@ public class Product_DAO {
     
     public static boolean AddProduct(String productID, String pdName, String pdDesc, boolean visibility, float price, String picture)
     {
-        try (Connection con = Tools.GetCon()) {
+        try (Connection con = Tools.getCon()) {
         CallableStatement cstmt = con.prepareCall("{CALL AddProduct(?, ?, ?, ?, ?, ?, ?)}");
 
         cstmt.setString(1, productID);
@@ -146,7 +162,7 @@ public class Product_DAO {
     
     public static void updateProduct(String productID, String pdName, String pdDesc, boolean visibility, float price, String picture)
     {
-        try(Connection con = Tools.GetCon())
+        try(Connection con = Tools.getCon())
         {
             PreparedStatement stm = con.prepareStatement("Update Product set pdname = ?, pddesc = ?, visibility = ?, price = ?, picture = ? where productid = ?");
             stm.setNString(1, pdName);

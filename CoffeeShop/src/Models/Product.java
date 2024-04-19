@@ -18,8 +18,9 @@ public class Product {
     protected Date adddate;
     protected float price;
     protected String picture;
+    protected int category;
 
-    public Product(String productID, String pdname, String pddesc, boolean visibility, Date adddate, float price, String picture) {
+    public Product(String productID, String pdname, String pddesc, boolean visibility, Date adddate, float price, String picture, int category) {
         this.productID = productID;
         this.pdname = pdname;
         this.pddesc = pddesc;
@@ -27,8 +28,17 @@ public class Product {
         this.adddate = adddate;
         this.price = price;
         this.picture = picture;
+        this.category = category;
     }
 
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+    
     public String getPicture() {
         return picture;
     }

@@ -44,7 +44,7 @@ public class Tools
         return null;
     }
     
-    public static void SetIcon(JLabel container, String imgpath)
+    public static void setIcon(JLabel container, String imgpath)
     {
         ImageIcon icon = new ImageIcon(imgpath);
         Image image = icon.getImage();
@@ -52,19 +52,7 @@ public class Tools
         container.setIcon(new ImageIcon(scaled));
     }
     
-    public static void SetFrameToCenter (JFrame frame)
-    {
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
-    }
-    
-    public static void SetFrameToCenter (JDialog frame)
-    {
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
-    }
-    
-    public static Connection GetCon()
+    public static Connection getCon()
     {
         try
         {
@@ -125,7 +113,7 @@ public class Tools
         if(status <= 0)
         {
             ArrayList<String> cities = new ArrayList();
-            try(Connection con = Tools.GetCon())
+            try(Connection con = Tools.getCon())
             {
                 
                 Statement stm = con.createStatement();
@@ -147,7 +135,7 @@ public class Tools
         if(status <= 1)
         {
             ArrayList<String> districts = new ArrayList();
-            try(Connection con = Tools.GetCon())
+            try(Connection con = Tools.getCon())
             {
                 
                 PreparedStatement stm = con.prepareStatement("Select full_name from districts where province_code in (Select code from provinces where full_name like ?)");
@@ -168,7 +156,7 @@ public class Tools
         if(status <= 2)
         {
             ArrayList<String> wards = new ArrayList();
-            try(Connection con = Tools.GetCon())
+            try(Connection con = Tools.getCon())
             {
                 
                 PreparedStatement stm = con.prepareStatement("Select full_name from wards where district_code in (Select code from districts where full_name like ?)");

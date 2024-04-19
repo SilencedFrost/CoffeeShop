@@ -1,5 +1,7 @@
 package UI;
 
+import UIElements.RoundJTextField;
+import UIElements.RoundJPasswordField;
 import DAO.Customer_DAO;
 import Utils.GetRegex;
 import Utils.Tools;
@@ -121,12 +123,12 @@ public class Register extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void OnRun()
     {
         // Set frame to center and request focus to btnRegister
-        Tools.SetFrameToCenter(this);
         btnRegister.requestFocus();
     }
     

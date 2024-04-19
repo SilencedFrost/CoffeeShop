@@ -1,5 +1,7 @@
 package UI;
 
+import UIElements.RoundJTextField;
+import UIElements.RoundJPasswordField;
 import DAO.Customer_DAO;
 import Utils.Tools;
 
@@ -204,6 +206,13 @@ public class Login extends javax.swing.JFrame {
                 case -1 ->                 
                 {
                     lblWarning.setText("Username or password is incorrect!");
+                }
+                case 0 ->
+                {
+                    MainMenu MnMN = new MainMenu();
+                    MnMN.setVisible(true);
+                    MnMN.login(Customer_DAO.getUserID(txtUsername.getText()));
+                    this.dispose();
                 }
                 //Manager level login returns 2
                 case 2 ->                 

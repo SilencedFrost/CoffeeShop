@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package UI;
+package UIElements;
 
 import java.awt.*;
 import javax.swing.*;
@@ -29,10 +29,5 @@ public class RoundJPanel extends JPanel {
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), arcWidth, arcHeight);
         g2.dispose();
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(100, 150);
     }
 }

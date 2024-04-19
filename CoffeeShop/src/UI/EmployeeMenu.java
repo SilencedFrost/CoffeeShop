@@ -126,11 +126,11 @@ public class EmployeeMenu extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void OnRun()
     {
-        Tools.SetFrameToCenter(this);
     }
     /**
      * @param args the command line arguments

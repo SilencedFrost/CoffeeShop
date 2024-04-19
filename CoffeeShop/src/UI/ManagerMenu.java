@@ -248,7 +248,7 @@ public class ManagerMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
-        new Login().setVisible(true);
+        new MainMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLogOutActionPerformed
 

@@ -65,13 +65,20 @@ create table Ords
 );
 go
 
-create table OrdItems
+create table OrdItem
 (
 	orderID int,
 	productID char(11),
 	primary key (orderID, productID)
 );
 go
+
+create table Category
+(
+	cateID int identity(1, 1),
+	cateName nvarchar(50)
+	primary key (cateID)
+);
 
 -- Product ID: XXXXX (product name identifier) - 123 (ProductID) - X (Size (S/M/L))
 create table Product
@@ -83,6 +90,7 @@ create table Product
 	adddate date,
 	price float,
 	picture varchar(50),
+	category int
 	primary key (productID)
 );
 go
@@ -205,11 +213,16 @@ alter table Ords
 		foreign key (userID) references Customer(userID);
 go
 
-alter table OrdItems
-	add constraint OrdItems_orderID
+alter table OrdItem
+	add constraint OrdItem_orderID
 		foreign key (orderID) references Ords(orderID),
-	constraint OrdItems_productID
+	constraint OrdItem_productID
 		foreign key (productID) references Product(productID);
+go
+
+alter table Product
+	add constraint Product_category
+		foreign key (category) references Category(cateID) on delete set null;
 go
 
 -- trigger
@@ -342,26 +355,33 @@ go
 insert into Customer(username, pass, position) values ('Admin', 'DefaultPa$$', '3'); 
 go
 
-insert into Product(productID, pdname, pddesc, visibility, price, picture) values 
-('ESPSO-001-S', N'Espresso'           , N'Small espresso'     , 1, 30000, 'src/images/ESPSO-001-S.png'),
-('ESPSO-002-M', N'Espresso'           , N'Medium espresso'    , 1, 40000, 'src/images/ESPSO-002-M.png'),
-('ESPSO-003-L', N'Espresso'           , N'Large espresso'     , 1, 45000, 'src/images/ESPSO-003-L.png'),
-('LATTE-001-S', N'Latte'              , N'Small latte'        , 1, 35000, 'src/images/LATTE-001-S.png'),
-('LATTE-002-M', N'Latte'              , N'Medium latte'       , 1, 45000, 'src/images/LATTE-002-M.png'),
-('LATTE-003-L', N'Latte'              , N'Large latte'        , 1, 50000, 'src/images/LATTE-003-L.png'),
-('CAPPU-001-S', N'Cappuccino'         , N'Small cappuccino'   , 1, 30000, 'src/images/CAPPU-001-S.png'),
-('CAPPU-002-M', N'Cappuccino'         , N'Medium cappuccino'  , 1, 40000, 'src/images/CAPPU-002-M.png'),
-('CAPPU-003-L', N'Cappuccino'         , N'Large cappuccino'   , 1, 45000, 'src/images/CAPPU-003-L.png'),
-('MOCHA-001-S', N'Mocha'              , N'Small mocha'        , 1, 40000, 'src/images/MOCHA-001-S.png'),
-('MOCHA-002-M', N'Mocha'              , N'Medium mocha'       , 1, 50000, 'src/images/MOCHA-002-M.png'),
-('MOCHA-003-L', N'Mocha'              , N'Large mocha'        , 1, 55000, 'src/images/MOCHA-003-L.png'),
-('CBREW-001-S', N'Cold brew'          , N'Small cold brew'    , 1, 35000, 'src/images/CBREW-001-S.png'),
-('CBREW-002-M', N'Cold brew'          , N'Medium cold brew'   , 1, 45000, 'src/images/CBREW-002-M.png'),
-('CBREW-003-L', N'Cold brew'          , N'Large cold brew'    , 1, 55000, 'src/images/CBREW-003-L.png'),
-('STRSM-001-M', N'Strawberry smoothie', N'Strawberry smoothie', 1, 45000, 'src/images/STRSM-001-M.png'),
-('MGOSM-001-M', N'Mango smoothie'     , N'Mango smoothie'     , 1, 45000, 'src/images/MGOSM-001-M.png'),
-('MATSM-001-M', N'Matcha smoothie'    , N'Matcha smoothie'    , 1, 45000, 'src/images/MATSM-001-M.png'),
-('AVOSM-001-M', N'Avocado smoothie'   , N'Avocado smoothie'   , 1, 45000, 'src/images/AVOSM-001-M.png')
+insert into Category(cateName) values 
+(N'Coffee'),
+(N'Smoothie'),
+(N'Tea'),
+(N'Milk Tea');
+go
+
+insert into Product(productID, pdname, pddesc, visibility, price, picture, category) values 
+('ESPSO-001-S', N'Espresso'           , N'Small espresso'     , 1, 30000, 'src/images/ESPSO-001-S.png', 1),
+('ESPSO-002-M', N'Espresso'           , N'Medium espresso'    , 1, 40000, 'src/images/ESPSO-002-M.png', 1),
+('ESPSO-003-L', N'Espresso'           , N'Large espresso'     , 1, 45000, 'src/images/ESPSO-003-L.png', 1),
+('LATTE-001-S', N'Latte'              , N'Small latte'        , 1, 35000, 'src/images/LATTE-001-S.png', 1),
+('LATTE-002-M', N'Latte'              , N'Medium latte'       , 1, 45000, 'src/images/LATTE-002-M.png', 1),
+('LATTE-003-L', N'Latte'              , N'Large latte'        , 1, 50000, 'src/images/LATTE-003-L.png', 1),
+('CAPPU-001-S', N'Cappuccino'         , N'Small cappuccino'   , 1, 30000, 'src/images/CAPPU-001-S.png', 1),
+('CAPPU-002-M', N'Cappuccino'         , N'Medium cappuccino'  , 1, 40000, 'src/images/CAPPU-002-M.png', 1),
+('CAPPU-003-L', N'Cappuccino'         , N'Large cappuccino'   , 1, 45000, 'src/images/CAPPU-003-L.png', 1),
+('MOCHA-001-S', N'Mocha'              , N'Small mocha'        , 1, 40000, 'src/images/MOCHA-001-S.png', 1),
+('MOCHA-002-M', N'Mocha'              , N'Medium mocha'       , 1, 50000, 'src/images/MOCHA-002-M.png', 1),
+('MOCHA-003-L', N'Mocha'              , N'Large mocha'        , 1, 55000, 'src/images/MOCHA-003-L.png', 1),
+('CBREW-001-S', N'Cold brew'          , N'Small cold brew'    , 1, 35000, 'src/images/CBREW-001-S.png', 1),
+('CBREW-002-M', N'Cold brew'          , N'Medium cold brew'   , 1, 45000, 'src/images/CBREW-002-M.png', 1),
+('CBREW-003-L', N'Cold brew'          , N'Large cold brew'    , 1, 55000, 'src/images/CBREW-003-L.png', 1),
+('STRSM-001-M', N'Strawberry smoothie', N'Strawberry smoothie', 1, 45000, 'src/images/STRSM-001-M.png', 2),
+('MGOSM-001-M', N'Mango smoothie'     , N'Mango smoothie'     , 1, 45000, 'src/images/MGOSM-001-M.png', 2),
+('MATSM-001-M', N'Matcha smoothie'    , N'Matcha smoothie'    , 1, 45000, 'src/images/MATSM-001-M.png', 2),
+('AVOSM-001-M', N'Avocado smoothie'   , N'Avocado smoothie'   , 1, 45000, 'src/images/AVOSM-001-M.png', 2)
 go
 
 /* === Vietnamese Provinces Database Dataset for Microsoft SQL Server === */

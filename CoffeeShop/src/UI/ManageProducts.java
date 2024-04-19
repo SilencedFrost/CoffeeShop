@@ -4,20 +4,16 @@
  */
 package UI;
 
-import DAO.Product_DAO;
-import Models.Product;
-import Utils.GetRegex;
-import Utils.Tools;
+import UIElements.*;
+import DAO.*;
+import Models.*;
+import Utils.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.TableModelEvent;
+import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -72,7 +68,7 @@ public class ManageProducts extends javax.swing.JDialog {
         txtPicture = new javax.swing.JTextField();
         btnChooseImage = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        imgPicture = new javax.swing.JLabel();
+        imgPicture = new ImageLabel(30);
         txtProductID = new javax.swing.JTextField();
         txtProductName = new javax.swing.JTextField();
         txtPrice = new javax.swing.JTextField();
@@ -176,16 +172,16 @@ public class ManageProducts extends javax.swing.JDialog {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel3);
 
-        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jLabel7.setText("Image path");
 
@@ -221,9 +217,7 @@ public class ManageProducts extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.add(jPanel5);
-
-        imgPicture.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.add(jPanel5, new java.awt.GridBagConstraints());
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -231,18 +225,18 @@ public class ManageProducts extends javax.swing.JDialog {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(imgPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(imgPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(imgPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(imgPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
-        jPanel4.add(jPanel6);
+        jPanel4.add(jPanel6, new java.awt.GridBagConstraints());
 
         jPanel2.add(jPanel4);
 
@@ -486,7 +480,7 @@ public class ManageProducts extends javax.swing.JDialog {
                 ImageIO.write(image, "png", outputFile);
                 System.out.println("Image converted to PNG and saved to: " + outputFile.getAbsolutePath());
                 txtPicture.setText(desDir + desFileName);
-                Tools.SetIcon(imgPicture, desDir + desFileName);
+                ((ImageLabel) imgPicture).setImage(desDir + desFileName);
             } catch (IOException e) {
                 System.err.println("Error converting image to PNG: " + e.getMessage());
             }
@@ -596,7 +590,7 @@ public class ManageProducts extends javax.swing.JDialog {
             btnChooseImage.setEnabled(true);
             if(pd.getPicture() != null)
             {
-                Tools.SetIcon(imgPicture, pd.getPicture());
+                ((ImageLabel) imgPicture).setImage(pd.getPicture());
             }
         }
     }

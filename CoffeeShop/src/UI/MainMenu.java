@@ -4,15 +4,21 @@
  */
 package UI;
 
-import Models.ProductDisplay;
+import DAO.Category_DAO;
+import UIElements.*;
 import Utils.Tools;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import Models.*;
+import DAO.*;
+import java.awt.CardLayout;
 
 /**
  *
  * @author thnrg
  */
 public class MainMenu extends javax.swing.JFrame {
-
+    protected int userID = 0;
     /**
      * Creates new form MainMenu
      */
@@ -28,15 +34,16 @@ public class MainMenu extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         pnTitleBar = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         pnTitle = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pnLogin = new javax.swing.JPanel();
-        btnRegister = new javax.swing.JButton();
+        pnBeforeLogin = new javax.swing.JPanel();
         btnLogin = new javax.swing.JButton();
+        btnRegister = new javax.swing.JButton();
+        pnAfterLogin = new javax.swing.JPanel();
         pnCategories = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         pnSide = new javax.swing.JPanel();
@@ -51,7 +58,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         pnTitleBar.setBackground(new java.awt.Color(68, 37, 0));
         pnTitleBar.setPreferredSize(new java.awt.Dimension(1280, 720));
-        pnTitleBar.setLayout(new java.awt.GridLayout(1, 0));
+        pnTitleBar.setLayout(new java.awt.GridLayout());
 
         jPanel4.setBackground(new java.awt.Color(68, 37, 0));
 
@@ -59,7 +66,7 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGap(0, 556, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,7 +88,7 @@ public class MainMenu extends javax.swing.JFrame {
             pnTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTitleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnTitleLayout.setVerticalGroup(
@@ -95,6 +102,19 @@ public class MainMenu extends javax.swing.JFrame {
         pnTitleBar.add(pnTitle);
 
         pnLogin.setBackground(new java.awt.Color(68, 37, 0));
+        pnLogin.setLayout(new java.awt.CardLayout());
+
+        pnBeforeLogin.setBackground(new java.awt.Color(68, 37, 0));
+
+        btnLogin.setBackground(new java.awt.Color(255, 255, 255));
+        btnLogin.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(0, 0, 0));
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         btnRegister.setBackground(new java.awt.Color(68, 37, 0));
         btnRegister.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -108,36 +128,43 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        btnLogin.setBackground(new java.awt.Color(255, 255, 255));
-        btnLogin.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(0, 0, 0));
-        btnLogin.setText("Login");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnLoginLayout = new javax.swing.GroupLayout(pnLogin);
-        pnLogin.setLayout(pnLoginLayout);
-        pnLoginLayout.setHorizontalGroup(
-            pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnLoginLayout.createSequentialGroup()
-                .addContainerGap(163, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnBeforeLoginLayout = new javax.swing.GroupLayout(pnBeforeLogin);
+        pnBeforeLogin.setLayout(pnBeforeLoginLayout);
+        pnBeforeLoginLayout.setHorizontalGroup(
+            pnBeforeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBeforeLoginLayout.createSequentialGroup()
+                .addContainerGap(293, Short.MAX_VALUE)
                 .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        pnLoginLayout.setVerticalGroup(
-            pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnLoginLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnBeforeLoginLayout.setVerticalGroup(
+            pnBeforeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnBeforeLoginLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnBeforeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                     .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        pnLogin.add(pnBeforeLogin, "beforeLogin");
+
+        pnAfterLogin.setBackground(new java.awt.Color(68, 37, 0));
+
+        javax.swing.GroupLayout pnAfterLoginLayout = new javax.swing.GroupLayout(pnAfterLogin);
+        pnAfterLogin.setLayout(pnAfterLoginLayout);
+        pnAfterLoginLayout.setHorizontalGroup(
+            pnAfterLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 556, Short.MAX_VALUE)
+        );
+        pnAfterLoginLayout.setVerticalGroup(
+            pnAfterLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 58, Short.MAX_VALUE)
+        );
+
+        pnLogin.add(pnAfterLogin, "afterLogin");
 
         pnTitleBar.add(pnLogin);
 
@@ -170,9 +197,13 @@ public class MainMenu extends javax.swing.JFrame {
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
 
         pnMain.setBackground(new java.awt.Color(255, 255, 255));
-        pnMain.setLayout(new java.awt.GridLayout(1, 1));
+        pnMain.setMaximumSize(new java.awt.Dimension(1081, 32767));
+        pnMain.setMinimumSize(new java.awt.Dimension(1081, 10));
+        pnMain.setLayout(new javax.swing.BoxLayout(pnMain, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(pnMain);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -182,7 +213,7 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(pnSide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +225,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnCategories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnCategories, javax.swing.GroupLayout.DEFAULT_SIZE, 1668, Short.MAX_VALUE)
             .addComponent(pnTitleBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -216,10 +247,49 @@ public class MainMenu extends javax.swing.JFrame {
     {
         loadItems();
     }
+    public void login(int userID)
+    {
+        this.userID = userID;
+        CardLayout card = (CardLayout)pnLogin.getLayout();
+        card.show(pnLogin, "afterLogin");
+    }
     
     private void loadItems()
+    {   
+        ArrayList<JPanel> ctg = new ArrayList();
+        for(String name: Category_DAO.getCategories())
+        {
+            CategoryDisplay cate = new CategoryDisplay(" " + name);
+            for(Product pd: getDisplayProduct(Category_DAO.getCateID(name)))
+            {
+                cate.addProducts(new ProductDisplay(pd.getPicture(), pd.getPrice(), pd.getPdname()).getPanel());
+            }
+            if(cate.checkChild())
+            {
+                ctg.add(cate.getPanel());
+            }
+        }
+        for(JPanel dsp : ctg)
+        {
+            pnMain.add(dsp);
+        }
+    }
+    
+    private ArrayList<Product> getDisplayProduct(int category)
     {
-        pnMain.add(new ProductDisplay("heh", 10, "heh").getPanel());
+        return Product_DAO.filterProducts
+            (
+            Product_DAO.filterProducts
+                (
+                Product_DAO.filterProducts
+                    (
+                    Product_DAO.loadAllProducts()
+                        , "visibility", true
+                    )       
+                    , "productID", "001"
+                )
+                , "category", category
+            );
     }
     
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -259,6 +329,8 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel pnAfterLogin;
+    private javax.swing.JPanel pnBeforeLogin;
     private javax.swing.JPanel pnCategories;
     private javax.swing.JPanel pnLogin;
     private javax.swing.JPanel pnMain;
