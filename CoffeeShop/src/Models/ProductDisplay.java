@@ -27,7 +27,7 @@ public class ProductDisplay {
     
     public RoundJPanel getPanel()
     {
-        RoundJPanel panel = new RoundJPanel();
+        RoundJPanel panel = new RoundJPanel(30);
         LayoutManager layout = new BorderLayout();
         panel.setLayout(layout);
         

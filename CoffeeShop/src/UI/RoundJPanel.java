@@ -4,37 +4,35 @@
  */
 package UI;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import javax.swing.JPanel;
-
+import java.awt.*;
+import javax.swing.*;
 /**
  *
  * @author thnrg
  */
-public class RoundJPanel extends JPanel{
-    private int arcWidth = 30; // The width of the rounded corners
-    private int arcHeight = 30; // The height of the rounded corners
 
-    public RoundJPanel() {
-        setOpaque(false); // Make sure the background is transparent
+public class RoundJPanel extends JPanel {
+    private final int arcWidth;
+    private final int arcHeight;
+
+    public RoundJPanel(int borderRad) {
+        this.arcWidth = borderRad;
+        this.arcHeight = borderRad;
+        setOpaque(false);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
-
-        // Draw rounded rectangle
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), arcWidth, arcHeight);
-
         g2.dispose();
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(100, 150); // Set preferred size
+        return new Dimension(100, 150);
     }
 }
