@@ -318,6 +318,7 @@ public class MainMenu extends javax.swing.JFrame {
     {
         loadItems();
     }
+    
     public void login(int userID)
     {
         this.userID = userID;

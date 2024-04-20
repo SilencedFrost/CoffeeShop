@@ -5,9 +5,7 @@
 package Utils;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
@@ -15,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;

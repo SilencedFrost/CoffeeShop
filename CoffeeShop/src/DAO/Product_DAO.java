@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import Models.Product;
+import Models.*;
 import Utils.Tools;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -174,6 +174,77 @@ public class Product_DAO {
             stm.execute();
         }
         catch (Exception ex) 
+        {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static ProductInfo getProductInfo(String productName)
+    {
+        ProductInfo pd = new ProductInfo();
+        try(Connection con = Tools.getCon())
+        {
+            PreparedStatement stm = con.prepareStatement("Select * from product where pdName like ?");
+            stm.setString(1, productName);
+            ResultSet rs = stm.executeQuery();
+            rs.next();
+            pd.setProductName(rs.getString("pdName"));
+            pd.setProductDesc(rs.getString("pdDesc"));
+            setSize(pd, productName);
+            pd.setPicture(rs.getString("picture"));
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return pd;
+    }
+    
+    public static String getSize(String productID)
+    {
+        return productID.substring(productID.length() - 1);
+    }
+    
+    public static void setSize(ProductInfo pd, String productName)
+    {
+        try(Connection con = Tools.getCon())
+        {
+            PreparedStatement stm = con.prepareStatement("Select * from product where pdName like ?");
+            stm.setString(1, productName);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                switch(getSize(rs.getString("productID")))
+                {
+                    case "S" ->
+                    {
+                        if(rs.getBoolean("visibility"))
+                        {
+                            pd.setS(true);
+                            pd.setPriceS(rs.getFloat("price"));
+                        }
+                        
+                    }
+                    case "M" ->
+                    {
+                        if(rs.getBoolean("visibility"))
+                        {
+                            pd.setM(true);
+                            pd.setPriceM(rs.getFloat("price"));
+                        }
+                    }
+                    case "L" ->
+                    {
+                        if(rs.getBoolean("visibility"))
+                        {
+                            pd.setL(true);
+                            pd.setPriceL(rs.getFloat("price"));
+                        }
+                    }
+                }
+            }
+        }
+        catch(Exception ex)
         {
             ex.printStackTrace();
         }

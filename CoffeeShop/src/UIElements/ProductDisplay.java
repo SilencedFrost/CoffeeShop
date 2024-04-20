@@ -4,7 +4,10 @@
  */
 package UIElements;
 
+import UI.ProductDialog;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.*;
@@ -23,6 +26,14 @@ public class ProductDisplay {
         this.price = price;
         this.pdName = pdName;
         pnMain = new JPanel();
+        pnMain.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ProductDialog pdDiag = new ProductDialog((JFrame)SwingUtilities.getWindowAncestor(pnMain), true);
+                pdDiag.showProduct(pdName);
+                pdDiag.setVisible(true);
+            }
+        });
         pnMain.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnMain.setPreferredSize(new Dimension(257, 350));
         pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
