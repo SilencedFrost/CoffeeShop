@@ -7,8 +7,7 @@ package UI;
 import UIElements.RoundJTextField;
 import DAO.Customer_DAO;
 import Models.Customer;
-import Utils.GetRegex;
-import Utils.Tools;
+import Utils.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -367,17 +366,17 @@ public class ManageEmployees extends javax.swing.JDialog {
 
     private boolean checkFields()
     {
-        if(!txtUsername.getText().matches(GetRegex.getUsernameRegex()))
+        if(!txtUsername.getText().matches(ConfigUtils.getUsernameRegex()))
         {
             JOptionPane.showMessageDialog(this, "Invalid username");
             txtUsername.requestFocus();
         }
-        else if (!txtEmail.getText().matches(GetRegex.getEmailRegex()))
+        else if (!txtEmail.getText().matches(ConfigUtils.getEmailRegex()))
         {
             JOptionPane.showMessageDialog(this, "Invalid email");
             txtEmail.requestFocus();
         }
-        else if (!txtPhone.getText().matches(GetRegex.getPhoneRegex()))
+        else if (!txtPhone.getText().matches(ConfigUtils.getPhoneRegex()))
         {
             JOptionPane.showMessageDialog(this, "Invalid phone number");
             txtPhone.requestFocus();
@@ -481,12 +480,12 @@ public class ManageEmployees extends javax.swing.JDialog {
     
     private void loadTable()
     {
-        tblEmployees.setModel(Tools.trimColumns(Customer_DAO.loadToTable(Customer_DAO.filterCustomers(Customer_DAO.loadAllCustomers(), "position", 1)), 6));
+        tblEmployees.setModel(UIUtils.trimColumns(Customer_DAO.loadToTable(Customer_DAO.filterCustomers(Customer_DAO.loadAllCustomers(), "position", 1)), 6));
     }
     
     private void loadTable(ArrayList<Customer> arr)
     {
-        tblEmployees.setModel(Tools.trimColumns(Customer_DAO.loadToTable(arr), 6));
+        tblEmployees.setModel(UIUtils.trimColumns(Customer_DAO.loadToTable(arr), 6));
     }
        
     /**
@@ -498,7 +497,7 @@ public class ManageEmployees extends javax.swing.JDialog {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        Tools.setLAF();
+        UIUtils.setLAF();
         //</editor-fold>
 
         /* Create and display the dialog */

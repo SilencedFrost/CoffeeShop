@@ -6,7 +6,7 @@ package DAO;
 
 import Models.Customer;
 import java.sql.*;
-import Utils.Tools;
+import Utils.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 public class Customer_DAO {
     public static int login(String username, String pass)
     {
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("select * from UserLogin(?, ?)");
             stm.setString(1, username);
@@ -37,7 +37,7 @@ public class Customer_DAO {
     
     public static int getUserID(String username)
     {
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("select userid from customer where username like ?");
             stm.setString(1, username);
@@ -54,7 +54,7 @@ public class Customer_DAO {
     
     public static String getUserName(int userID)
     {
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("Select username from customer where userid = ?");
             stm.setInt(1, userID);
@@ -71,7 +71,7 @@ public class Customer_DAO {
     
     public static void deleteUser(int userid)
     {
-        try (Connection con = Tools.getCon())
+        try (Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("delete Customer where userid = ?");
             stm.setInt(1, userid);
@@ -84,7 +84,7 @@ public class Customer_DAO {
     
     public static void resetPass(int userid)
     {
-        try (Connection con = Tools.getCon())
+        try (Connection con = DBUtils.getCon())
         {
             Statement stm = con.createStatement();
             stm.execute("EXEC ResetPass " + userid);
@@ -97,7 +97,7 @@ public class Customer_DAO {
     
     public static boolean AddUser(String username, String email, String password, int position)
     {
-        try (Connection con = Tools.getCon()) {
+        try (Connection con = DBUtils.getCon()) {
         CallableStatement cstmt = con.prepareCall("{CALL AddUser(?, ?, ?, ?, null, null, ?)}");
 
         cstmt.setString(1, username);
@@ -121,7 +121,7 @@ public class Customer_DAO {
     
     public static boolean AddUser(String username, String email, String password, int position, boolean gender)
     {
-        try (Connection con = Tools.getCon()) {
+        try (Connection con = DBUtils.getCon()) {
         CallableStatement cstmt = con.prepareCall("{CALL AddUser(?, ?, ?, ?, ?, null, ?)}");
 
         cstmt.setString(1, username);
@@ -146,7 +146,7 @@ public class Customer_DAO {
     
     public static boolean AddUser(String username, String email, String password, int position, boolean gender, String phone)
     {
-        try (Connection con = Tools.getCon()) {
+        try (Connection con = DBUtils.getCon()) {
         CallableStatement cstmt = con.prepareCall("{CALL AddUser(?, ?, ?, ?, ?, ?, ?)}");
 
         cstmt.setString(1, username);
@@ -172,7 +172,7 @@ public class Customer_DAO {
     
     public static void updateUser(int userID, String email, boolean gender, String phone)
     {
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("Update customer set email = ?, gender = ?, phone = ? where userid = ?");
             stm.setString(1, email);
@@ -191,7 +191,7 @@ public class Customer_DAO {
     public static ArrayList<Customer> loadAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
 
-        try (Connection con = Tools.getCon();
+        try (Connection con = DBUtils.getCon();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM Customer")) 
         {

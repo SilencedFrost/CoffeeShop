@@ -7,10 +7,8 @@ package UI;
 import UIElements.RoundJTextField;
 import DAO.Customer_DAO;
 import Models.Customer;
-import Utils.GetRegex;
-import Utils.Tools;
+import Utils.*;
 import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
@@ -427,12 +425,12 @@ public class ManageUsers extends javax.swing.JDialog {
 
     private boolean checkFields()
     {
-        if(!txtUsername.getText().matches(GetRegex.getUsernameRegex()))
+        if(!txtUsername.getText().matches(ConfigUtils.getUsernameRegex()))
         {
             JOptionPane.showMessageDialog(this, "Invalid username");
             txtUsername.requestFocus();
         }
-        if(!txtEmail.getText().matches(GetRegex.getEmailRegex()))
+        if(!txtEmail.getText().matches(ConfigUtils.getEmailRegex()))
         {
             JOptionPane.showMessageDialog(this, "Invalid email!");
             txtEmail.requestFocus();
@@ -550,7 +548,7 @@ public class ManageUsers extends javax.swing.JDialog {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        Tools.setLAF();
+        UIUtils.setLAF();
         //</editor-fold>
 
         /* Create and display the dialog */

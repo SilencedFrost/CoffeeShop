@@ -26,6 +26,8 @@ public class ManageProducts extends javax.swing.JDialog {
 
     /**
      * Creates new form ManageDrinks
+     * @param parent
+     * @param modal
      */
     public ManageProducts(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -497,7 +499,7 @@ public class ManageProducts extends javax.swing.JDialog {
 
     private boolean checkFields()
     {
-        if(!txtProductID.getText().matches(GetRegex.getProductIDRegex()))
+        if(!txtProductID.getText().matches(ConfigUtils.getProductIDRegex()))
         {
             JOptionPane.showMessageDialog(this, "Product ID must have a format of:\nXXXXX-000-X");
             txtProductID.requestFocus();
@@ -507,7 +509,7 @@ public class ManageProducts extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Product name must not be empty!");
             txtProductName.requestFocus();
         }
-        else if(!txtPrice.getText().matches(GetRegex.getPositiveFloatRegex()))
+        else if(!txtPrice.getText().matches(ConfigUtils.getPositiveFloatRegex()))
         {
             JOptionPane.showMessageDialog(this, "Price is invalid!");
             txtPrice.requestFocus();
@@ -597,7 +599,7 @@ public class ManageProducts extends javax.swing.JDialog {
     
     private void setSize()
     {
-        if(txtProductID.getText().matches(GetRegex.getProductIDRegex()) && txtProductID.isEditable())
+        if(txtProductID.getText().matches(ConfigUtils.getProductIDRegex()) && txtProductID.isEditable())
         {
             switch (txtProductID.getText().substring(txtProductID.getText().length() - 1)) 
             {
@@ -639,7 +641,7 @@ public class ManageProducts extends javax.swing.JDialog {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        Tools.setLAF();
+        UIUtils.setLAF();
         //</editor-fold>
 
         /* Create and display the dialog */

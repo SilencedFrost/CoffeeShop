@@ -3,8 +3,7 @@ package UI;
 import UIElements.RoundJTextField;
 import UIElements.RoundJPasswordField;
 import DAO.Customer_DAO;
-import Utils.GetRegex;
-import Utils.Tools;
+import Utils.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -136,19 +135,19 @@ public class Register extends javax.swing.JFrame {
         // Clear lblWarning
         lblWarning.setText("");
         // Check username regex, only alphanumerical values and underscores, must be 1 to 50 char long
-        if(!txtUsername.getText().matches(GetRegex.getUsernameRegex()))
+        if(!txtUsername.getText().matches(ConfigUtils.getUsernameRegex()))
         {
             lblWarning.setText("username must be 1-50 char long, no special char other than _");
             txtUsername.requestFocus();
         }
         // Check email regex.
-        else if (!txtEmail.getText().matches(GetRegex.getEmailRegex()))
+        else if (!txtEmail.getText().matches(ConfigUtils.getEmailRegex()))
         {
             lblWarning.setText("Invalid email!");
             txtEmail.requestFocus();
         }
         // Check password regex, must have atleast 1 special character, ranging from 8 to 32 char long
-        else if(!new String(txtPassword.getPassword()).matches(GetRegex.getPasswordRegex()))
+        else if(!new String(txtPassword.getPassword()).matches(ConfigUtils.getPasswordRegex()))
         {
             lblWarning.setText("password must have special char, uppercase char and be 8-32 char");
             txtPassword.requestFocus();
@@ -192,7 +191,7 @@ public class Register extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        Tools.setLAF();
+        UIUtils.setLAF();
         //</editor-fold>
         //</editor-fold>
 

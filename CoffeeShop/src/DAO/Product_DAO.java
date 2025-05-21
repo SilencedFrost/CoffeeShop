@@ -5,7 +5,7 @@
 package DAO;
 
 import Models.*;
-import Utils.Tools;
+import Utils.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -91,7 +91,7 @@ public class Product_DAO {
     public static ArrayList<Product> loadAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
 
-        try (Connection con = Tools.getCon();
+        try (Connection con = DBUtils.getCon();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM Product")) 
         {
@@ -122,7 +122,7 @@ public class Product_DAO {
     
     public static void deleteProduct(String productID)
     {
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("delete product where productid like ?");
             stm.setString(1, productID);
@@ -136,7 +136,7 @@ public class Product_DAO {
     
     public static boolean AddProduct(String productID, String pdName, String pdDesc, boolean visibility, float price, String picture)
     {
-        try (Connection con = Tools.getCon()) {
+        try (Connection con = DBUtils.getCon()) {
         CallableStatement cstmt = con.prepareCall("{CALL AddProduct(?, ?, ?, ?, ?, ?, ?)}");
 
         cstmt.setString(1, productID);
@@ -162,7 +162,7 @@ public class Product_DAO {
     
     public static void updateProduct(String productID, String pdName, String pdDesc, boolean visibility, float price, String picture)
     {
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("Update Product set pdname = ?, pddesc = ?, visibility = ?, price = ?, picture = ? where productid = ?");
             stm.setNString(1, pdName);
@@ -182,7 +182,7 @@ public class Product_DAO {
     public static ProductInfo getProductInfo(String productName)
     {
         ProductInfo pd = new ProductInfo();
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("Select * from product where pdName like ?");
             stm.setString(1, productName);
@@ -207,7 +207,7 @@ public class Product_DAO {
     
     public static void setSize(ProductInfo pd, String productName)
     {
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("Select * from product where pdName like ?");
             stm.setString(1, productName);

@@ -1,10 +1,6 @@
 package UI;
 
-import Utils.Tools;
-import com.formdev.flatlaf.FlatIntelliJLaf;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import Utils.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -141,7 +137,7 @@ public class EmployeeMenu extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        Tools.setLAF();
+        UIUtils.setLAF();
         //</editor-fold>
         //</editor-fold>
 

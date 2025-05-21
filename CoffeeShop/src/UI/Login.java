@@ -3,7 +3,7 @@ package UI;
 import UIElements.RoundJTextField;
 import UIElements.RoundJPasswordField;
 import DAO.Customer_DAO;
-import Utils.Tools;
+import Utils.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -245,7 +245,7 @@ public class Login extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        Tools.setLAF();
+        UIUtils.setLAF();
         //</editor-fold>
 
         /* Create and display the form */

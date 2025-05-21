@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import Utils.Tools;
+import Utils.*;
 import java.util.ArrayList;
 import java.sql.*;
 
@@ -17,7 +17,7 @@ public class Category_DAO {
     public static ArrayList<String> getCategories()
     {
         ArrayList<String> cateNames = new ArrayList();;
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery("Select cateName from category");
@@ -36,7 +36,7 @@ public class Category_DAO {
     public static int getCateID(String cateName)
     {
         int result = 0;
-        try(Connection con = Tools.getCon())
+        try(Connection con = DBUtils.getCon())
         {
             PreparedStatement stm = con.prepareStatement("Select cateID from category where cateName like ?");
             stm.setString(1, cateName);
