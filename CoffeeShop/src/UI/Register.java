@@ -4,6 +4,7 @@ import UIElements.RoundJTextField;
 import UIElements.RoundJPasswordField;
 import DAO.Customer_DAO;
 import Utils.*;
+import java.util.Arrays;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -168,7 +169,7 @@ public class Register extends javax.swing.JFrame {
             txtPassword.requestFocus();
         }
         // Check if password and confirm password match
-        else if(!new String(txtPassword.getPassword()).equals(new String(txtConfirmPassWord.getPassword()))) {
+        else if(!Arrays.equals(txtPassword.getPassword(),txtConfirmPassWord.getPassword())) {
             lblWarning.setText("password does not match!");
         }
         // Run register
