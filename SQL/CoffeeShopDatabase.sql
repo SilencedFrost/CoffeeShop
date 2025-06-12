@@ -21,7 +21,7 @@ create table Customer
 	username varchar(50) UNIQUE not null,
 	profilepic varchar(50),
 	position int not null,
-	email varchar(254),
+	email varchar(254) UNIQUE not null,
 	pass varchar(64) not null,
 	gender bit,
 	phone varchar(12),
@@ -280,7 +280,7 @@ create or alter proc AddUser
 @Success int output
 as
 begin
-	if not exists(select * from Customer where username like @Username)
+	if not exists(select * from Customer where username like @Username) and not exists(select * from Customer where email like @Email)
 		begin
 		insert into Customer(username, email, pass, position, gender, phone) values (@Username, @Email, @Password, @Position, @Gender, @Phone)
 		set @Success = 1;
@@ -347,13 +347,13 @@ go
 
 -- Inserts
 
-insert into Customer(username, pass, position) values ('Customer', 'DefaultPa$$', '0'); 
+insert into Customer(username, pass, email, position) values ('Customer', 'DefaultPa$$', 'default0@mail.com', '0'); 
 go
-insert into Customer(username, pass, position) values ('Employee', 'DefaultPa$$', '1'); 
+insert into Customer(username, pass, email, position) values ('Employee', 'DefaultPa$$', 'default1@mail.com', '1'); 
 go
-insert into Customer(username, pass, position) values ('Manager', 'DefaultPa$$', '2'); 
+insert into Customer(username, pass, email, position) values ('Manager' , 'DefaultPa$$', 'default2@mail.com', '2'); 
 go
-insert into Customer(username, pass, position) values ('Admin', 'DefaultPa$$', '3'); 
+insert into Customer(username, pass, email, position) values ('Admin'   , 'DefaultPa$$', 'default3@mail.com', '3'); 
 go
 
 insert into Category(cateName) values 

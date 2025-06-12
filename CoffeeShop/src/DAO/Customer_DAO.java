@@ -30,7 +30,7 @@ public class Customer_DAO {
         }
         catch(Exception ex)
         {
-            ex.printStackTrace();
+            System.err.println(ex);
         }
         return -1;
     }
@@ -78,7 +78,7 @@ public class Customer_DAO {
             stm.execute();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            System.err.println(ex);
         }
     }
     
@@ -91,7 +91,7 @@ public class Customer_DAO {
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            System.err.println(ex);
         }
     }
     
@@ -114,7 +114,7 @@ public class Customer_DAO {
         } 
         catch (Exception ex) 
         {
-        ex.printStackTrace();
+            System.err.println(ex);
         }
         return false;
     }
@@ -139,7 +139,7 @@ public class Customer_DAO {
         } 
         catch (Exception ex) 
         {
-        ex.printStackTrace();
+        System.err.println(ex);
         }
         return false;
     }
@@ -165,7 +165,7 @@ public class Customer_DAO {
         } 
         catch (Exception ex) 
         {
-        ex.printStackTrace();
+        System.err.println(ex);
         }
         return false;
     }
@@ -184,7 +184,7 @@ public class Customer_DAO {
         }
         catch(Exception ex)
         {
-            ex.printStackTrace();
+            System.err.println(ex);
         }
     }
     
@@ -215,7 +215,7 @@ public class Customer_DAO {
                 customers.add(customer);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println(ex);
         }
 
         return customers;
