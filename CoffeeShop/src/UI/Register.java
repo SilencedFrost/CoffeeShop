@@ -171,7 +171,7 @@ public class Register extends javax.swing.JFrame {
             // If user already exist
             else
             {
-                lblWarning.setText("user already exist!");
+                lblWarning.setText("user or email already exist!");
             }
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
