@@ -135,42 +135,53 @@ public class Register extends javax.swing.JFrame {
         // Clear lblWarning
         lblWarning.setText("");
         // Check username regex, only alphanumerical values and underscores, must be 1 to 50 char long
-        if(!txtUsername.getText().matches(ConfigUtils.getUsernameRegex()))
-        {
-            lblWarning.setText("username must be 1-50 char long, no special char other than _");
+        if(!txtUsername.getText().matches(ConfigUtils.getUsernameRegex())) {
+            // Length check
+            if(txtUsername.getText().equals("")) {
+                lblWarning.setText("username must not be empty!");
+            } else {
+                lblWarning.setText("username must be 1-50 char long, no special char other than _");
+            }
+            // Focus
             txtUsername.requestFocus();
         }
         // Check email regex.
-        else if (!txtEmail.getText().matches(ConfigUtils.getEmailRegex()))
-        {
-            lblWarning.setText("Invalid email!");
+        else if (!txtEmail.getText().matches(ConfigUtils.getEmailRegex())) {
+            // Length check
+            if(txtEmail.getText().equals("")) {
+                lblWarning.setText("email must not be empty!");
+            } else {
+                lblWarning.setText("Invalid email!");
+            }
+            // Focus
             txtEmail.requestFocus();
         }
         // Check password regex, must have atleast 1 special character, ranging from 8 to 32 char long
-        else if(!new String(txtPassword.getPassword()).matches(ConfigUtils.getPasswordRegex()))
-        {
-            lblWarning.setText("password must have special char, uppercase char and be 8-32 char");
+        else if(!new String(txtPassword.getPassword()).matches(ConfigUtils.getPasswordRegex())) {
+            // Length check
+            if(new String(txtPassword.getPassword()).equals("")) {
+                lblWarning.setText("password must not be empty!");
+            } else {
+                lblWarning.setText("password must have special char, uppercase char and be 8-32 char");
+            }
+            // Focus
             txtPassword.requestFocus();
         }
         // Check if password and confirm password match
-        else if(!new String(txtPassword.getPassword()).equals(new String(txtConfirmPassWord.getPassword())))
-        {
+        else if(!new String(txtPassword.getPassword()).equals(new String(txtConfirmPassWord.getPassword()))) {
             lblWarning.setText("password does not match!");
         }
         // Run register
-        else 
-        {
+        else {
             // Run register function, return boolean (if user exist = false (failed), if sucess = true
             boolean check = Customer_DAO.AddUser(txtUsername.getText(), txtEmail.getText(), new String(txtPassword.getPassword()), 0);
             // If success, dispose and open login form
-            if(check)
-            {
+            if(check) {
                 new Login().setVisible(true);
                 this.dispose();
             }
             // If user already exist
-            else
-            {
+            else {
                 lblWarning.setText("user or email already exist!");
             }
         }
